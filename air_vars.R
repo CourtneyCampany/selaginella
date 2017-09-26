@@ -9,9 +9,7 @@ clim$vpd <- RHtoVPD(RH=clim$rh_perc, TdegC=clim$temp_C, Pa=101)
 
 
 # plot objects ------------------------------------------------------------
-templab <- expression(Temperature~~(degree*C))
-dewlab <- expression(Dew~Point~~(degree*C))
-vpdlab <- expression(VPD~~(kPa))
+
 cols <- c("red3","cornflowerblue","gray15","forestgreen")
 
 startday <- min(clim$datetime)
