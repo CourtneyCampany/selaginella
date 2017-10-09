@@ -20,10 +20,10 @@ photolrc<-lrc$Photo #net photosynthetic rate (Anet)
 curvelrc<-data.frame(PARlrc,photolrc)
 curvelrc # *inspect raw data and check notebook (data reasonable or need edited/discarded?)
 
-par(mar=c(3,3,0,0),oma=c(1.5,1.5,1,1))
-plot(PARlrc,photolrc,xlab="", ylab="", ylim=c(-2,max(photolrc)+2),cex.lab=1.2,cex.axis=1.5,cex=2)
-mtext(expression("PPFD ("*mu*"mol photons "*m^-2*s^-1*")"),side=1,line=3.3,cex=1.5)
-mtext(expression(A[net]*" ("*mu*"mol "*CO[2]*" "*m^-2*s^-1*")"),side=2,line=2.5,cex=1.5)
+par(mar=c(3,3,0,0),oma=c(1.5,1.5,1,1),cex.lab=1,cex.axis=1)
+plot(PARlrc,photolrc,xlab="", ylab="", ylim=c(-2,max(photolrc)+2), cex=1.5)
+mtext(expression("PPFD ("*mu*"mol photons "*m^-2*s^-1*")"),side=1,line=2.5,cex=1)
+mtext(expression(A[net]*" ("*mu*"mol "*CO[2]*" "*m^-2*s^-1*")"),side=2,line=2.5,cex=1)
 
 # --- Nonlinear least squares regression (non-rectangular hyperbola)
 # 4 parameter model: Amax (max gross photosytnthetic rate), Rd (dark respiration), 
@@ -43,23 +43,34 @@ summary(curve.nlslrc) #summary of model fit
 
 # ---Graph raw data with modeled curve---
 
-par(mar=c(3,3,0,0),oma=c(1.5,1.5,1,1))
-plot(PARlrc,photolrc,xlab="", ylab="", ylim=c(-2,max(photolrc)+2),cex.lab=1.2,cex.axis=1.5,cex=2)
-mtext(expression("PPFD ("*mu*"mol photons "*m^-2*s^-1*")"),side=1,line=3.3,cex=2)
-mtext(expression(A[net]*" ("*mu*"mol "*CO[2]*" "*m^-2*s^-1*")"),side=2,line=2,cex=2)
-curve((1/(2*summary(curve.nlslrc)$coef[4,1]))*(summary(curve.nlslrc)$coef[2,1]*x+summary(curve.nlslrc)$coef[1,1]-sqrt((summary(curve.nlslrc)$coef[2,1]*x+summary(curve.nlslrc)$coef[1,1])^2-4*summary(curve.nlslrc)$coef[2,1]*summary(curve.nlslrc)$coef[4,1]*summary(curve.nlslrc)$coef[1,1]*x))-summary(curve.nlslrc)$coef[3,1],lwd=2,col="blue",add=T)
+par(mar=c(3,3,0,0),oma=c(1.5,1.5,1,1),cex.lab=1,cex.axis=1)
+plot(PARlrc,photolrc,xlab="", ylab="", ylim=c(-2,max(photolrc)+2),cex=1.5)
+mtext(expression("PPFD ("*mu*"mol photons "*m^-2*s^-1*")"),side=1,line=2.5,cex=1)
+mtext(expression(A[net]*" ("*mu*"mol "*CO[2]*" "*m^-2*s^-1*")"),side=2,line=2.5,cex=1)
+curve((1/(2*summary(curve.nlslrc)$coef[4,1]))*(summary(curve.nlslrc)$coef[2,1]*
+      x+summary(curve.nlslrc)$coef[1,1]-sqrt((summary(curve.nlslrc)$coef[2,1]*
+      x+summary(curve.nlslrc)$coef[1,1])^2-4*summary(curve.nlslrc)$coef[2,1]*
+      summary(curve.nlslrc)$coef[4,1]*summary(curve.nlslrc)$coef[1,1]*x))-
+      summary(curve.nlslrc)$coef[3,1],lwd=2,col="blue",add=T)
 
 # ---Solve for light compensation point (LCPT), PPFD where Anet=0 ---
-x<-function(x) {(1/(2*summary(curve.nlslrc)$coef[4,1]))*(summary(curve.nlslrc)$coef[2,1]
+lcpt_func<-function(x) {(1/(2*summary(curve.nlslrc)$coef[4,1]))*(summary(curve.nlslrc)$coef[2,1]
                 *x+summary(curve.nlslrc)$coef[1,1]-sqrt((summary(curve.nlslrc)$coef[2,1]
                 *x+summary(curve.nlslrc)$coef[1,1])^2-4*summary(curve.nlslrc)$coef[2,1]
                 *summary(curve.nlslrc)$coef[4,1]*summary(curve.nlslrc)$coef[1,1]*x))
                 -summary(curve.nlslrc)$coef[3,1]}
 
-uniroot(x,c(0,50))$root #LCPT
+uniroot(lcpt_func,c(0,1500))$root #LCPT
+
+lcpt2 <- coef(curve.nlslrc)[3]/coef(curve.nlslrc)[2] #Rd/AQY
 
 # ---Solve for light saturation point (LSP), PPFD where 75% of Amax is achieved (75% is arbitrary - cutoff could be changed)
-x<-function(x) {(1/(2*summary(curve.nlslrc)$coef[4,1]))*(summary(curve.nlslrc)$coef[2,1]*x+summary(curve.nlslrc)$coef[1,1]-sqrt((summary(curve.nlslrc)$coef[2,1]*x+summary(curve.nlslrc)$coef[1,1])^2-4*summary(curve.nlslrc)$coef[2,1]*summary(curve.nlslrc)$coef[4,1]*summary(curve.nlslrc)$coef[1,1]*x))-summary(curve.nlslrc)$coef[3,1]-(0.75*summary(curve.nlslrc)$coef[1,1])+0.75*(summary(curve.nlslrc)$coef[3,1])}
+lsp_func<-function(x) {(1/(2*summary(curve.nlslrc)$coef[4,1]))*
+    (summary(curve.nlslrc)$coef[2,1]*x+summary(curve.nlslrc)$coef[1,1]-
+    sqrt((summary(curve.nlslrc)$coef[2,1]*x+summary(curve.nlslrc)$coef[1,1])^2-4*
+    summary(curve.nlslrc)$coef[2,1]*summary(curve.nlslrc)$coef[4,1]*
+    summary(curve.nlslrc)$coef[1,1]*x))-summary(curve.nlslrc)$coef[3,1]-
+    (0.75*summary(curve.nlslrc)$coef[1,1])+0.75*(summary(curve.nlslrc)$coef[3,1])}
 
-uniroot(x,c(0,1000))$root #LSP 
+uniroot(lsp_func,c(0,1000))$root #LSP 
 

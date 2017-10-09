@@ -1,3 +1,4 @@
+source("master_scripts/plot_objects.R")
 ##micro climate data for site conditions for selaginella
 
 clim <- read.csv("raw_data/microclimate.csv", stringsAsFactors = FALSE)
@@ -14,7 +15,9 @@ cols <- c("red3","cornflowerblue","gray15","forestgreen")
 
 startday <- min(clim$datetime)
 enddate <- max(clim$datetime)
-xAT <- seq(from=startday,to=enddate, by="hour")
+enddate2 <- as.POSIXct("2011-07-01 14:00:00", tz="UTC")
+# xAT <- seq(from=startday,to=enddate, by="hour", tz="UTC")
+xAT2 <- seq(from=startday,to=enddate2, length.out = 10, tz="UTC")
 sites <- unique(clim$site)
 
 # plotting ----------------------------------------------------------------
@@ -30,7 +33,7 @@ plot(temp_C ~ datetime, data=clim[clim$site=="sel_anc",], ylim=c(20, 32),
 points(temp_C ~ datetime, data=clim[clim$site=="sel_eur",], col="cornflowerblue", type='l')
 points(temp_C ~ datetime, data=clim[clim$site=="sel_oxa",], col="gray15", type='l')
 points(temp_C ~ datetime, data=clim[clim$site=="sel_umb",], col="forestgreen", type='l')
-axis.POSIXct(1, at=xAT, format = "%H:%M:%S", label=FALSE)
+axis.POSIXct(1, at=xAT2, format = "%H:%M:%S", label=FALSE)
 legend("topright",col=cols,lty=1,legend=sites,inset=.01,  bty='n',cex=1.1)
 
 #2. dewpoint
@@ -40,14 +43,15 @@ plot(dewpoint_C ~ datetime, data=clim[clim$site=="sel_anc",], ylim=c(10, 30),
 points(dewpoint_C ~ datetime, data=clim[clim$site=="sel_eur",], col="cornflowerblue", type='l')
 points(dewpoint_C ~ datetime, data=clim[clim$site=="sel_oxa",], col="gray15", type='l')
 points(dewpoint_C ~ datetime, data=clim[clim$site=="sel_umb",], col="forestgreen", type='l')
-axis.POSIXct(1, at=xAT, format = "%H:%M:%S", label=FALSE)
+axis.POSIXct(1, at=xAT2, format = "%H:%M:%S", label=FALSE)
 
 #3. vpd
-par(mar=c(0,5,0,1))
+par(mar=c(4,5,0,1))
 plot(vpd ~ datetime, data=clim[clim$site=="sel_anc",], ylim=c(0, 1.5),
-     type='l',col="red3",lwd=2, lty=1,  xlab="", ylab=vpdlab)
+     type='l',col="red3",lwd=2, lty=1,  xlab="", ylab=vpdlab, xaxt='n')
 points(vpd ~ datetime, data=clim[clim$site=="sel_eur",], col="cornflowerblue", type='l')
 points(vpd ~ datetime, data=clim[clim$site=="sel_oxa",], col="gray15", type='l')
 points(vpd ~ datetime, data=clim[clim$site=="sel_umb",], col="forestgreen", type='l')
-axis.POSIXct(1, at=xAT, format = "%H:%M:%S")
+axis.POSIXct(1, at=xAT2, format = "%H:%M:%S", las=3)
+
 
