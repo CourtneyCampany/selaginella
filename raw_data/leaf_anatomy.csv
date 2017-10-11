@@ -1,4 +1,4 @@
-family,specoes,individual,light,lma_µgpermm2,stomatalarea_mm2,stomatadensity_numbpermm2 ,stomataldensity_controlarea
+family,species,individual,light,lma_µgpermm2,stomatalarea_mm2,stomatadensity_numbpermm2 ,stomataldensity_controlarea
 Selaginella,Sel_eur,1,High,7.744608042,0.457380789,44.13043478,96.48510791
 Selaginella,Sel_eur,2,High,7.85248953,0.458750445,36.52173913,79.61134315
 Selaginella,Sel_eur,3,High,7.533378086,0.422134683,53.04347826,125.6553426
@@ -84,5 +84,3 @@ Ferns,Bul_port,7,Low,14.14622922,1.370364396,15.65217391,11.42190644
 Ferns,Bul_port,8,Low,13.89361798,1.410162733,12.17391304,8.632984519
 Ferns,Bul_port,9,Low,14.77775731,1.399008285,13.47826087,9.634153717
 Ferns,Bul_port,10,Low,13.76731236,1.374742492,20.43478261,14.86444387
-,,,,,,,
-,,,,,,,

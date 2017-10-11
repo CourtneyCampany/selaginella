@@ -1,7 +1,16 @@
 ##this script looks at leaf chemistry
 
 chem <- read.csv("raw_data/leaf_chemistry.csv")
+  chem$nmass <- with(chem, mass_ug * percN)
+  chem$pmass <- with(chem, mass_ug * percP)
 
+library(doBy)
+chem_agg <- summaryBy(. ~ family + species, data=chem , FUN=mean, keep.names = TRUE)
+chem_agg2 <- chem_agg[,c(1:2, 4:8, 10:11)]
+write.csv(chem_agg2, "calculated_data/leaf_chem_means.csv", row.names = FALSE)
+
+# plotting ----------------------------------------------------------------    
+   
 boxplot(percN ~ family, data=chem)
 boxplot(cn_ratio ~ family, data=chem)
 boxplot(percP ~ family, data=chem)
