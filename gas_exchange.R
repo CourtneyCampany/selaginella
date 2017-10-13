@@ -51,12 +51,13 @@ amass <- merge(photo2_low ,lma_agg)
   amass$amass <- with(amass, photo * sla *1000) #umols co2/ug 
 
 
-
 # amass versus nitro ------------------------------------------------------
 
 #merge leaf nitron on a mass balance
 
-chem <- read.csv("calculated_data/leaf_chem_means.csv")
+chem <- read.csv("raw_data/leaf_chemistry.csv")
+  chem$nmass <- with(chem, mass_ug * percN)
+  chem$pmass <- with(chem, mass_ug * percP)
   
 amass_chem <- merge(amass, chem, all = TRUE)  
   
