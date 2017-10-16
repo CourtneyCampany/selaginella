@@ -1,19 +1,21 @@
 source("master_scripts/plot_objects.R")
 #gas exchange date for seligenalla and other ferns
 
-photo <- read.csv("raw_data/gas_exchange.csv")
-photo2 <- read.csv("raw_data/leaf_gasexchange.csv")
-photo2_low <- photo2[photo2$light_umol == 50,]
+# photo <- read.csv("raw_data/gas_exchange.csv")
+# photo2 <- read.csv("raw_data/leaf_gasexchange.csv")
+# photo2_low <- photo2[photo2$light_umol == 50,]
+
+amax <- read.csv("raw_data/gas_exchange_selaginella.csv") #does not have ferns
 
 # basic plotting ----------------------------------------------------------------
 
 #raw data from low light (50umols)
-boxplot(photo ~ family, data=photo2_low)
-boxplot(cond ~ family, data=photo2_low)
-boxplot(photo/cond ~ family, data=photo2_low)
+boxplot(photo ~ family, data=amax)
+boxplot(cond ~ family, data=amax)
+boxplot(photo/cond ~ family, data=amax)
 #selaginella lower photo and cond than ferns
 
-sela <- droplevels(photo2_low[photo2_low$family == "Selaginella",])
+# sela <- droplevels(photo2_low[photo2_low$family == "Selaginella",])
 
 # windows(12,6)
 
@@ -45,9 +47,10 @@ lma <- read.csv("raw_data/leaf_anatomy.csv")
   lma$sla <- 1/lma$lma_µgpermm2 #m2/ug
 library(doBy)
 lma_agg <- summaryBy(sla ~ species, data=lma, FUN=mean, keep.names = TRUE)
+lma_sela <- lma[lma$family == "Selaginella",]
 
-#merge with photo and use sla to calculate amass (watch units) (different individial, use mean sla)
-amass <- merge(photo2_low ,lma_agg)
+#merge with photo and use sla to calculate amass (watch units)
+amass <- merge(amax ,lma_sela)
   amass$amass <- with(amass, photo * sla *1000) #umols co2/ug 
 
 
@@ -58,14 +61,13 @@ amass <- merge(photo2_low ,lma_agg)
 chem <- read.csv("raw_data/leaf_chemistry.csv")
   chem$nmass <- with(chem, mass_ug * percN)
   chem$pmass <- with(chem, mass_ug * percP)
+chem_sela <- chem[chem$family == "Selaginella",]
   
-amass_chem <- merge(amass, chem, all = TRUE)  
+amass_chem <- merge(amass, chem_sela, all = TRUE)  
   
+#plot photo vs chem-------------- (need habitats)
 
-plot(amass ~ nmass, data=amass_chem, col=species, pch=16)
+plot(amass ~ nmass, data=amass_chem, col=species, pch=16, ylim=c(0, 1200), xlim=c(0,16))
 
-#just selaginella
-sela <- amass_chem[amass_chem$family == "Selaginella",]
+plot(amass ~ pmass, data=amass_chem, col=species, pch=16, ylim=c(0, 1200), xlim=c(0, 1.6))
 
-plot(amass ~ nmass, data=sela, col=species, pch=16)
-plot(amass ~ pmass, data=sela, col=species, pch=16, xlim=c(0,1.25),ylim=c(0,600))
