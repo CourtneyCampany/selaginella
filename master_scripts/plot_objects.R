@@ -12,3 +12,14 @@ vpdlab <- expression(VPD~~(kPa))
 
 parlab <- expression("PPFD ("*mu*"mol photons "*m^-2*s^-1*")")
 anetlab <- expression(A[net]*" ("*mu*"mol "*CO[2]*" "*m^-2*s^-1*")")
+
+#treatment colors
+gradient <- colorRampPalette(c("orange", "forestgreen"))
+palette(gradient(4))
+trtcols <- palette(gradient(4))
+trtlab <- c("full_sun","understory_midlight","understory_lowlight","swamp_lowlight")
+trtcols2 <- c(trtcols[1], trtcols[4], trtcols[3], trtcols[2])
+
+
+# standard error function--------------------------------------------------------------------------------
+se <- function(x) sd(x)/sqrt(length(x))
