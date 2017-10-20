@@ -5,7 +5,7 @@ stom <- read.csv("raw_data/leaf_anatomy.csv")
 treat <- read.csv("raw_data/treatments.csv")
   stom <- merge(stom, treat)
 
-cond <- read.csv("raw_data/gas_exchange_selaginella.csv")
+cond <- read.csv("raw_data/gas_exchange.csv")
 
 
 stomcond <- droplevels(merge(stom, cond, all = TRUE))
