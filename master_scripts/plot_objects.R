@@ -11,7 +11,12 @@ dewlab <- expression(Dew~Point~~(degree*C))
 vpdlab <- expression(VPD~~(kPa))
 
 parlab <- expression("PPFD ("*mu*"mol photons "*m^-2*s^-1*")")
+lcplab <- expression("LCP ("*mu*"mol photons "*m^-2*s^-1*")")
 anetlab <- expression(A[net]*" ("*mu*"mol "*CO[2]*" "*m^-2*s^-1*")")
+
+denslab <- expression(Stomatal~Density~~(mm^2))
+lmalab <- expression(Leaf~Mass~Area~~(mu*g~mm^-2))
+stomarealab <- expression(Stomatal~Area~~(mm^2))
 
 #treatment colors
 gradient <- colorRampPalette(c("orange", "forestgreen"))
