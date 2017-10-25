@@ -2,9 +2,8 @@ source("master_scripts/plot_objects.R")
 #gas exchange date for seligenalla and other ferns
 
 amax <- read.csv("raw_data/gas_exchange.csv") #does not have ferns
-treat <- read.csv("raw_data/treatments.csv")
-  amax <- merge(amax, treat)
-amax_sela <- droplevels(amax[amax$family == "Selaginella",])
+# treat <- read.csv("raw_data/treatments.csv")
+#   amax <- merge(amax, treat)
 
 # calcualte Amass ---------------------------------------------------------
 
@@ -14,24 +13,23 @@ lma <- read.csv("raw_data/leaf_anatomy.csv")
   lma$sla <- 1/lma$lma_µgpermm2 #m2/ug
 library(doBy)
 lma_agg <- summaryBy(sla ~ species, data=lma, FUN=mean, keep.names = TRUE)
-lma_sela <- lma[lma$family == "Selaginella",]
-
 #merge with photo and use sla to calculate amass (watch units)
-amass <- merge(amax_sela ,lma_sela)
+amass <- merge(amax ,lma)
   amass$amass <- with(amass, photo * sla *1000) #umols co2/ug 
 
 # amass versus nitro ------------------------------------------------------
 
-#merge leaf nitron on a mass balance
+#merge leaf nitro on a mass balance
 
 chem <- read.csv("raw_data/leaf_chemistry.csv")
   chem$nmass <- with(chem, mass_ug * percN)
   chem$pmass <- with(chem, mass_ug * percP)
-chem_sela <- chem[chem$family == "Selaginella",]
   
-amass_chem <- merge(amass, chem_sela, all = TRUE)  
+amass_chem <- merge(amass, chem, all = TRUE)  
+amass_chem2 <- amass_chem[,c(1:8, 16:17)]
+amass_chem2 <- amass_chem[complete.cases(amass_chem),]
   
-#plot photo vs chem-------------- (need habitats)
+#plot sela photo vs chem habitats (wont work now, have to susbet sela)--------
 
 plot(amass ~ nmass, data=amass_chem, col=trtcols2[habitat], pch=16, ylim=c(0, 1200), xlim=c(0,16))
 legend("topleft", trtlab, pch=16, col=palette(), bty='n', inset=.01)
@@ -51,3 +49,12 @@ boxplot(lma_µgpermm2 ~ habitat, data=amass_chem, col=trtcols)
 boxplot(photo ~ habitat, data=amass_chem, col=trtcols)
 boxplot(cond ~ habitat, data=amass_chem, col=trtcols)
 boxplot(chlorophyll_mgperl ~ habitat, data=amass_chem, col=trtcols)
+
+
+#phot vs chem on a mass basis (ferns vs sela)--------
+
+plot(amass ~ nmass, data=amass_chem2, col=family, pch=16)
+# legend("topleft", trtlab, pch=16, bty='n', inset=.01)
+
+plot(amass ~ pmass, data=amass_chem2, col=family, pch=16)
+legend("topleft", trtlab, pch=16, bty='n', inset=.01)
