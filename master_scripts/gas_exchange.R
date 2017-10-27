@@ -27,7 +27,8 @@ chem <- read.csv("raw_data/leaf_chemistry.csv")
   
 amass_chem <- merge(amass, chem, all = TRUE)  
 amass_chem2 <- amass_chem[,c(1:8, 16:17)]
-amass_chem2 <- amass_chem[complete.cases(amass_chem),]
+amass_chem3 <- amass_chem2[complete.cases(amass_chem2),]
+amass_chem3$pnue <- with(amass_chem3, amass/nmass)
   
 #plot sela photo vs chem habitats (wont work now, have to susbet sela)--------
 
@@ -52,9 +53,27 @@ boxplot(chlorophyll_mgperl ~ habitat, data=amass_chem, col=trtcols)
 
 
 #phot vs chem on a mass basis (ferns vs sela)--------
+familycols <- c("cornflowerblue", "forestgreen")
 
-plot(amass ~ nmass, data=amass_chem2, col=family, pch=16)
-# legend("topleft", trtlab, pch=16, bty='n', inset=.01)
+plot(amass ~ nmass, data=amass_chem3, col=familycols[family], pch=16, 
+  xlim=c(0, 18), ylim=c(0,1200))
+legend("topleft", legend=c("Ferns", "Selaginella"), col=familycols,
+      pch=16, bty='n', inset=.01)
 
-plot(amass ~ pmass, data=amass_chem2, col=family, pch=16)
-legend("topleft", trtlab, pch=16, bty='n', inset=.01)
+plot(amass ~ pmass, data=amass_chem3, col=familycols[family], pch=16, xlim=c(0, 1.8),ylim=c(0, 1200))
+legend("topleft", legend=c("Ferns", "Selaginella"), col=familycols,
+       pch=16, bty='n', inset=.01)
+
+
+#PNUE
+
+boxplot(amass/nmass ~ family, data=amass_chem3, col=familycols, outline=FALSE, ylab="PNUE")
+boxplot(amass/pmass ~ family, data=amass_chem3, col=familycols, outline=FALSE, ylab="PPUE")
+
+plot(amass/nmass ~ lma_µgpermm2, data=amass_chem3, col=familycols[family], pch=16, ylim=c(0, 150))
+legend("topleft", legend=c("Ferns", "Selaginella"), col=familycols,
+       pch=16, bty='n', inset=.01)
+plot(amass/pmass ~ lma_µgpermm2, data=amass_chem3, col=familycols[family], pch=16)
+
+
+

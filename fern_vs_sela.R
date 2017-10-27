@@ -73,7 +73,7 @@ axis(1, at=c(1:7, 9:12), labels=FALSE)
 boxplot(cn_ratio ~ species, data=chem, ylab="C:N", xaxt='n', outline=FALSE,
         at=c(1:7, 9:13), ylim=c(0, 40))
 axis(1, at=c(1:7, 9:13), labels=FALSE)
-text(cex=1, x=c(1:7, 9:13), y=-13.5, labels=specieslabs2, xpd=TRUE, srt=90)
+text(cex=1, x=c(1:7, 9:13), y=-10.5, labels=specieslabs2, xpd=TRUE, srt=90)
 
 #nitrogen
 boxplot(percN ~ species, data=chem, ylab="Leaf Nitrogen (%)", xaxt='n', outline=FALSE,
