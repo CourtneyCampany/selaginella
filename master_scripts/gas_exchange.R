@@ -1,4 +1,5 @@
 source("master_scripts/plot_objects.R")
+source("functions.R")
 #gas exchange date for seligenalla and other ferns
 
 amax <- read.csv("raw_data/gas_exchange.csv") #does not have ferns
@@ -26,9 +27,10 @@ chem <- read.csv("raw_data/leaf_chemistry.csv")
   chem$pmass <- with(chem, mass_ug * percP)
   
 amass_chem <- merge(amass, chem, all = TRUE)  
-amass_chem2 <- amass_chem[,c(1:8, 16:17)]
+amass_chem2 <- amass_chem[,c(1:8, 10,16:17)]
 amass_chem3 <- amass_chem2[complete.cases(amass_chem2),]
-amass_chem3$pnue <- with(amass_chem3, amass/nmass)
+amass_chem3$pnue2 <- with(amass_chem3, amass/nmass)
+amass_chem3$pnue <- with(amass_chem3, photo/percN)
   
 #plot sela photo vs chem habitats (wont work now, have to susbet sela)--------
 
@@ -60,20 +62,32 @@ plot(amass ~ nmass, data=amass_chem3, col=familycols[family], pch=16,
 legend("topleft", legend=c("Ferns", "Selaginella"), col=familycols,
       pch=16, bty='n', inset=.01)
 
-plot(amass ~ pmass, data=amass_chem3, col=familycols[family], pch=16, xlim=c(0, 1.8),ylim=c(0, 1200))
+# plot(amass ~ pmass, data=amass_chem3, col=familycols[family], pch=16, xlim=c(0, 1.8),ylim=c(0, 1200))
+# legend("topleft", legend=c("Ferns", "Selaginella"), col=familycols,
+#        pch=16, bty='n', inset=.01)
+
+
+#PNUE--------
+#delete one outlier
+amass_chem4 <- droplevels(amass_chem3[amass_chem3$pnue2 < 200,])
+
+library(scales)
+lma_pnue_mod<- lm(pnue2~ lma_µgpermm2 ,data=amass_chem4)
+
+boxplot(amass/nmass ~ family, data=amass_chem4, col=familycols, outline=FALSE, ylab="PNUE")
+boxplot(amass/pmass ~ family, data=amass_chem4, col=familycols, outline=FALSE, ylab="PPUE")
+
+plot(pnue2 ~ lma_µgpermm2, data=amass_chem4, type='n', ylim=c(-5, 125), xlim=c(0, 30))
+legend("topright", legend=c("Ferns", "Selaginella"), col=familycols,
+       pch=16, bty='n', inset=.01)
+predline(lma_pnue_mod, col="grey20",lwd=2, lty=2)
+points(pnue2 ~ lma_µgpermm2, data=amass_chem4, col=familycols[family], pch=16)
+
+plot(pnue ~ lma_µgpermm2, data=amass_chem3, col=familycols[family], pch=16)
 legend("topleft", legend=c("Ferns", "Selaginella"), col=familycols,
        pch=16, bty='n', inset=.01)
 
-
-#PNUE
-
-boxplot(amass/nmass ~ family, data=amass_chem3, col=familycols, outline=FALSE, ylab="PNUE")
-boxplot(amass/pmass ~ family, data=amass_chem3, col=familycols, outline=FALSE, ylab="PPUE")
-
-plot(amass/nmass ~ lma_µgpermm2, data=amass_chem3, col=familycols[family], pch=16, ylim=c(0, 150))
-legend("topleft", legend=c("Ferns", "Selaginella"), col=familycols,
-       pch=16, bty='n', inset=.01)
-plot(amass/pmass ~ lma_µgpermm2, data=amass_chem3, col=familycols[family], pch=16)
+# plot(amass/pmass ~ lma_µgpermm2, data=amass_chem3, col=familycols[family], pch=16)
 
 
 
