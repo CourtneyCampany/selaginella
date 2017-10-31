@@ -45,15 +45,13 @@ specieslabs2 <- c("Sel_anc","Sel_art","Sel_ate","Sel_eur","Sel_oax","Sel_swim",
 
 
 #this starts the combined dataset for ferns/sela with stomatal traits-----
-library(plyr)
-chem_agg <- ddply(chem2, "family", summarise,
-               N    = sum(!is.na(percP)),
-               mean = mean(percP, na.rm=TRUE),
-               sd   = sd(percP, na.rm=TRUE),
-               se   = sd / sqrt(N)
-)
-
-
+# library(plyr)
+# chem_agg <- ddply(chem2, "family", summarise,
+#                N    = sum(!is.na(percP)),
+#                mean = mean(percP, na.rm=TRUE),
+#                sd   = sd(percP, na.rm=TRUE),
+#                se   = sd / sqrt(N)
+# )
 
 
 # boxplots ------------------------------------------------------------

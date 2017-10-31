@@ -18,6 +18,10 @@ denslab <- expression(Stomatal~Density~~(mm^2))
 lmalab <- expression(Leaf~Mass~Area~~(mu*g~mm^-2))
 stomarealab <- expression(Stomatal~Area~~(mm^2))
 
+lmalab <- expression(LMA~~(g~cm^-2))
+nuelab <- expression(Nitrogen~Use~Efficiency~~(units))
+puelab <- expression(Phosphorus~Use~Efficiency~~(units))
+
 #treatment colors
 gradient <- colorRampPalette(c("orange", "forestgreen"))
 palette(gradient(4))
