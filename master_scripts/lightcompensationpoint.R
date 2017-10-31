@@ -39,6 +39,8 @@ lcp_family <- rbind(lcp_sela, lcp_fern)
   lcp_family$species <- factor(lcp_family$species, levels=c("sel_anc","sel_art","sel_ate","sel_eur",
                                                             "sel_oax","sel_swi","sel_umb",
                                                             "cyc_sem","dip_str"))
+write.csv(lcp_family, "calculated_data/lcp.csv", row.names = FALSE)
+  
   
 lrclabs <- c("sel_anc","sel_art","sel_ate","sel_eur","sel_oax","sel_swi","sel_umb","cyc_sem","dip_str")
 

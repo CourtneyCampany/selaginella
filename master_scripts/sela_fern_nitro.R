@@ -1,0 +1,78 @@
+source("functions.R")
+source("master_scripts/plot_objects.R")
+library(scales)
+#Here we plot functional traits of sela vs larger fern dataset
+
+fern_cr <- read.csv("raw_data/ferns_costa_rundel.csv")
+
+sela_chem <- read.csv("raw_data/leaf_chemistry.csv")
+sela_stom <- read.csv("raw_data/leaf_anatomy.csv")
+
+
+#need selaginella means
+sela_chem_agg <- doBy::summaryBy(. ~ family + species, data=sela_chem, FUN=c(mean, se))
+sela_stom_agg <-doBy::summaryBy(. ~ family + species, data=sela_stom, FUN=c(mean, se))
+
+#merge selaginella data sets
+sela_agg <- merge(sela_chem_agg[,c(1:2, 5, 12)], sela_stom_agg[,c(1:2, 4,9)])
+
+
+# plotting ----------------------------------------------------------------
+terr <- fern_cr[fern_cr$habitat=="terrestrial",]
+
+windows(7,7)
+par(mar=c(5,5,2,2), las=1)
+plot(percN.mean ~ lma_µgpermm2.mean, data=sela_agg, xlim=c(0, 55), ylim=c(0, 6.5), 
+    col=famcols[family], xlab=lmalab, ylab="Leaf Nitrogen (%)", type='n')
+with(sela_agg, arrows(lma_µgpermm2.mean, percN.mean, lma_µgpermm2.mean, 
+                      percN.mean+percN.se,col=famcols[family],
+                      angle=90, length=0.03, cex=1.5))
+with(sela_agg, arrows(lma_µgpermm2.mean, percN.mean, lma_µgpermm2.mean, 
+                      percN.mean-percN.se,col=famcols[family],
+                      angle=90, length=0.03, cex=1.5))
+points(percN.mean ~ lma_µgpermm2.mean, data=sela_agg,pch=16,
+        col=famcols[family], cex=1.5)
+
+with(sela_agg, arrows(lma_µgpermm2.mean, percN.mean, lma_µgpermm2.mean+lma_µgpermm2.se, 
+                      percN.mean,col=famcols[family],
+                      angle=90, length=0.03, cex=1.5))
+with(sela_agg, arrows(lma_µgpermm2.mean, percN.mean, lma_µgpermm2.mean-lma_µgpermm2.se, 
+                      percN.mean,col=famcols[family],
+                      angle=90, length=0.03, cex=1.5))
+
+# with(terr, arrows(lma_gpercm, percN.mean, lma_gpercm, 
+#                       percN.mean+percN.se,col=famcols[family],
+#                       angle=90, length=0.03, cex=1.5))
+# with(terr, arrows(lma_gpercm, percN.mean, lma_gpercm, 
+#                       percN.mean-percN.se,col=famcols[family],
+#                       angle=90, length=0.03, cex=1.5))
+
+points((percN_mgperg)/10 ~ lma_gpercm, data=terr,pch=21, bg=famcols[1], cex=1.5)
+
+legend("topleft", legend=c("Ferns", "Selaginella", "Ferns-survey"), 
+       col=c(familycols[1],familycols[2],"black"),pt.bg=familycols[1],
+       pch=c(16, 16, 21), bty='n', inset=.01, cex=1)
+
+dev.copy2pdf(file= "output/fern_sela_survey.pdf")
+dev.off()
+
+
+
+plot(mpg~disp,data=mtcars)
+arrows(x0=mtcars$disp,
+       y0=mtcars$mpg*0.95,
+       x1=mtcars$disp,
+       y1=mtcars$mpg*1.05,
+       angle=90,
+       code=3,
+       length=0.04,
+       lwd=0.4)
+
+arrows(x0=mtcars$disp*0.95,
+       y0=mtcars$mpg,
+       x1=mtcars$disp*1.05,
+       y1=mtcars$mpg,
+       angle=90,
+       code=3,
+       length=0.04,
+       lwd=0.4)

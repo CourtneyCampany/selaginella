@@ -1,8 +1,10 @@
 source("master_scripts/plot_objects.R")
 source("functions.R")
+library(doBy)
+library(scales)
 #gas exchange date for seligenalla and other ferns
 
-amax <- read.csv("raw_data/gas_exchange.csv") #does not have ferns
+amax <- read.csv("raw_data/gas_exchange.csv") 
 # treat <- read.csv("raw_data/treatments.csv")
 #   amax <- merge(amax, treat)
 
@@ -12,7 +14,7 @@ amax <- read.csv("raw_data/gas_exchange.csv") #does not have ferns
 lma <- read.csv("raw_data/leaf_anatomy.csv")
   lma <- lma[,c(1:3,5)]
   lma$sla <- 1/lma$lma_µgpermm2 #m2/ug
-library(doBy)
+
 lma_agg <- summaryBy(sla ~ species, data=lma, FUN=mean, keep.names = TRUE)
 #merge with photo and use sla to calculate amass (watch units)
 amass <- merge(amax ,lma)
@@ -34,8 +36,6 @@ amass_chem3$pnue <- with(amass_chem3, photo/percN)
 amass_chem3$ppue2 <- with(amass_chem3, amass/pmass)
 
 #plotobjects
-library(scales)
-familycols <- c(alpha("cornflowerblue",.8),alpha("forestgreen",.8))
 
 #plot sela photo vs chem habitats (wont work now, have to susbet sela)--------
 
@@ -62,10 +62,9 @@ boxplot(chlorophyll_mgperl ~ habitat, data=amass_chem, col=trtcols)
 
 
 #phot vs chem on a mass basis (ferns vs sela)--------
-plot(amass ~ nmass, data=amass_chem3, col=familycols[family], pch=16, 
-  xlim=c(0, 18), ylim=c(0,1200))
-legend("topleft", legend=c("Ferns", "Selaginella"), col=familycols,
-      pch=16, bty='n', inset=.01)
+# plot(amass ~ nmass, data=amass_chem3, col=familycols[family], pch=16)
+# legend("topleft", legend=c("Ferns", "Selaginella"), col=familycols,
+#       pch=16, bty='n', inset=.01)
 
 # plot(amass ~ pmass, data=amass_chem3, col=familycols[family], pch=16, xlim=c(0, 1.8),ylim=c(0, 1200))
 # legend("topleft", legend=c("Ferns", "Selaginella"), col=familycols,
@@ -91,7 +90,7 @@ plot(pnue2 ~ lma_µgpermm2, data=amass_chem4, type='n',
 legend("topright", legend=c("Ferns", "Selaginella"), col=familycols,
        pch=16, bty='n', inset=.01, cex=1.25)
 predline(lma_pnue_mod, col="grey20",lwd=2, lty=2)
-points(pnue2 ~ lma_µgpermm2, data=amass_chem4, col=familycols[family], 
+points(pnue2 ~ lma_µgpermm2, data=amass_chem4, col=famcols[family], 
        cex=1.5,pch=16)
 dev.copy2pdf(file= "output/nue_fig.pdf")
 dev.off()

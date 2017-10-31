@@ -77,13 +77,13 @@ text(cex=1, x=c(1:7, 9:13), y=-10.5, labels=specieslabs2, xpd=TRUE, srt=90)
 boxplot(percN ~ species, data=chem, ylab="Leaf Nitrogen (%)", xaxt='n', outline=FALSE,
         at=c(1:7, 9:13), ylim=c(0, 5))
 axis(1, at=c(1:7, 9:13), labels=FALSE)
-text(cex=1, x=c(1:7, 9:13), y=-13.5, labels=specieslabs2, xpd=TRUE, srt=90)
+text(cex=1, x=c(1:7, 9:13), y=-1.25, labels=specieslabs2, xpd=TRUE, srt=90)
 
 #phosphorus
 boxplot(percP ~ species, data=chem, ylab="Leaf Phosphorus (%)", xaxt='n', outline=FALSE,
         at=c(1:7, 9:13), ylim=c(0, .5))
 axis(1, at=c(1:7, 9:13), labels=FALSE)
-text(cex=1, x=c(1:7, 9:13), y=-.17, labels=specieslabs2, xpd=TRUE, srt=90)
+text(cex=1, x=c(1:7, 9:13), y=-.125, labels=specieslabs2, xpd=TRUE, srt=90)
 
 #lma
 boxplot(lma_µgpermm2 ~ species, data=stom, ylab=lmalab, 
