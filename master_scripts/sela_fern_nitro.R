@@ -56,23 +56,36 @@ legend("topleft", legend=c("Ferns", "Selaginella", "Ferns-survey"),
 dev.copy2pdf(file= "output/fern_sela_survey.pdf")
 dev.off()
 
+habcols <- c(alpha("firebrick3", .8), alpha("gold2",.8), alpha("maroon4",.8))
 
+#with all habitats
 
-plot(mpg~disp,data=mtcars)
-arrows(x0=mtcars$disp,
-       y0=mtcars$mpg*0.95,
-       x1=mtcars$disp,
-       y1=mtcars$mpg*1.05,
-       angle=90,
-       code=3,
-       length=0.04,
-       lwd=0.4)
+windows(7,7)
+par(mar=c(5,5,2,2), las=1)
+plot(percN.mean ~ lma_µgpermm2.mean, data=sela_agg, xlim=c(0, 55), ylim=c(0, 6.5), 
+     col=famcols[family], xlab=lmalab, ylab="Leaf Nitrogen (%)", type='n')
+with(sela_agg, arrows(lma_µgpermm2.mean, percN.mean, lma_µgpermm2.mean, 
+                      percN.mean+percN.se,col=famcols[family],
+                      angle=90, length=0.03, cex=1.5))
+with(sela_agg, arrows(lma_µgpermm2.mean, percN.mean, lma_µgpermm2.mean, 
+                      percN.mean-percN.se,col=famcols[family],
+                      angle=90, length=0.03, cex=1.5))
 
-arrows(x0=mtcars$disp*0.95,
-       y0=mtcars$mpg,
-       x1=mtcars$disp*1.05,
-       y1=mtcars$mpg,
-       angle=90,
-       code=3,
-       length=0.04,
-       lwd=0.4)
+with(sela_agg, arrows(lma_µgpermm2.mean, percN.mean, lma_µgpermm2.mean+lma_µgpermm2.se, 
+                      percN.mean,col=famcols[family],
+                      angle=90, length=0.03, cex=1.5))
+with(sela_agg, arrows(lma_µgpermm2.mean, percN.mean, lma_µgpermm2.mean-lma_µgpermm2.se, 
+                      percN.mean,col=famcols[family],
+                      angle=90, length=0.03, cex=1.5))
+
+points(percN.mean ~ lma_µgpermm2.mean, data=sela_agg,pch=16,
+       col=famcols[family], cex=1.5)
+
+points((percN_mgperg)/10 ~ lma_gpercm, data=fern_cr,pch=21 ,bg=habcols[habitat], cex=1.5)
+
+legend("topleft", legend=c("Ferns", "Selaginella","Terrestrial","Epiphyte" ,"Hemi-epiphyte" ), 
+       col=c(familycols[1],familycols[2],"black", "black", "black"),pt.bg=habcols,
+       pch=c(16, 16, 21, 21, 21),bty='n', inset=.01, cex=1)
+
+dev.copy2pdf(file= "output/fern_sela_survey2.pdf")
+dev.off()

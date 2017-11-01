@@ -1,3 +1,4 @@
+library(scales)
 #plot objects
 condlab <- expression(italic(g)[s]~~(mol~m^-2~s^-1))
 photolab <- expression(italic(A[n])~~(mu*mol~m^-2~s^-1))

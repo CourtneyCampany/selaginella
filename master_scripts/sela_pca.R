@@ -34,7 +34,7 @@ cols2 <- c(rep(cols[1],5), rep(cols[2],5),rep(cols[3],5),rep(cols[4],5),rep(cols
            rep(cols[6],5),rep(cols[7],5))
 
 windows(7,7)
-plot(sites,ylab="PC 2 (26.5 %)", xlab="PC 1 (43.4 %)",
+plot(sites,ylab="PC 2 (22.3 %)", xlab="PC 1 (40.4 %)",
      cex=1.5, col=alpha(cols2, .8), pch=16,xlim=c(-2, 2), ylim=c(-2, 2))
   text(spp,labels=rownames(scores(sela_rda, display='species')),cex=1,
        col="grey20")
