@@ -18,7 +18,7 @@ sela_agg <- merge(sela_chem_agg[,c(1:2, 5, 12)], sela_stom_agg[,c(1:2, 4,9)])
 
 
 # plotting ----------------------------------------------------------------
-terr <- fern_cr[fern_cr$habitat=="terrestrial",]
+terr <- fern_cr[fern_cr$habitat=="terrestrial" | fern_cr$habitat == "hemi-epiphyte",]
 
 windows(7,7)
 par(mar=c(5,5,2,2), las=1)
@@ -40,13 +40,6 @@ with(sela_agg, arrows(lma_µgpermm2.mean, percN.mean, lma_µgpermm2.mean-lma_µg
                       percN.mean,col=famcols[family],
                       angle=90, length=0.03, cex=1.5))
 
-# with(terr, arrows(lma_gpercm, percN.mean, lma_gpercm, 
-#                       percN.mean+percN.se,col=famcols[family],
-#                       angle=90, length=0.03, cex=1.5))
-# with(terr, arrows(lma_gpercm, percN.mean, lma_gpercm, 
-#                       percN.mean-percN.se,col=famcols[family],
-#                       angle=90, length=0.03, cex=1.5))
-
 points((percN_mgperg)/10 ~ lma_gpercm, data=terr,pch=21, bg=famcols[1], cex=1.5)
 
 legend("topleft", legend=c("Ferns", "Selaginella", "Ferns-survey"), 
@@ -56,36 +49,3 @@ legend("topleft", legend=c("Ferns", "Selaginella", "Ferns-survey"),
 dev.copy2pdf(file= "output/fern_sela_survey.pdf")
 dev.off()
 
-habcols <- c(alpha("firebrick3", .8), alpha("gold2",.8), alpha("maroon4",.8))
-
-#with all habitats
-
-windows(7,7)
-par(mar=c(5,5,2,2), las=1)
-plot(percN.mean ~ lma_µgpermm2.mean, data=sela_agg, xlim=c(0, 55), ylim=c(0, 6.5), 
-     col=famcols[family], xlab=lmalab, ylab="Leaf Nitrogen (%)", type='n')
-with(sela_agg, arrows(lma_µgpermm2.mean, percN.mean, lma_µgpermm2.mean, 
-                      percN.mean+percN.se,col=famcols[family],
-                      angle=90, length=0.03, cex=1.5))
-with(sela_agg, arrows(lma_µgpermm2.mean, percN.mean, lma_µgpermm2.mean, 
-                      percN.mean-percN.se,col=famcols[family],
-                      angle=90, length=0.03, cex=1.5))
-
-with(sela_agg, arrows(lma_µgpermm2.mean, percN.mean, lma_µgpermm2.mean+lma_µgpermm2.se, 
-                      percN.mean,col=famcols[family],
-                      angle=90, length=0.03, cex=1.5))
-with(sela_agg, arrows(lma_µgpermm2.mean, percN.mean, lma_µgpermm2.mean-lma_µgpermm2.se, 
-                      percN.mean,col=famcols[family],
-                      angle=90, length=0.03, cex=1.5))
-
-points(percN.mean ~ lma_µgpermm2.mean, data=sela_agg,pch=16,
-       col=famcols[family], cex=1.5)
-
-points((percN_mgperg)/10 ~ lma_gpercm, data=fern_cr,pch=21 ,bg=habcols[habitat], cex=1.5)
-
-legend("topleft", legend=c("Ferns", "Selaginella","Terrestrial","Epiphyte" ,"Hemi-epiphyte" ), 
-       col=c(familycols[1],familycols[2],"black", "black", "black"),pt.bg=habcols,
-       pch=c(16, 16, 21, 21, 21),bty='n', inset=.01, cex=1)
-
-dev.copy2pdf(file= "output/fern_sela_survey2.pdf")
-dev.off()

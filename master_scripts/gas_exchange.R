@@ -2,7 +2,7 @@ source("master_scripts/plot_objects.R")
 source("functions.R")
 #gas exchange date for seligenalla and other ferns
 
-amax <- read.csv("raw_data/gas_exchange.csv") #does not have ferns
+amax <- read.csv("raw_data/gas_exchange.csv") 
 # treat <- read.csv("raw_data/treatments.csv")
 #   amax <- merge(amax, treat)
 
@@ -27,6 +27,7 @@ chem <- read.csv("raw_data/leaf_chemistry.csv")
   chem$pmass <- with(chem, mass_ug * percP)
   
 amass_chem <- merge(amass, chem, all = TRUE)  
+# write.csv(amass_chem, "calculated_data/sela_photo_chem.csv", row.names = FALSE)
 amass_chem2 <- amass_chem[,c(1:9, 11,17:18)]
 amass_chem3 <- amass_chem2[complete.cases(amass_chem2),]
 amass_chem3$pnue2 <- with(amass_chem3, amass/nmass)
@@ -34,24 +35,13 @@ amass_chem3$pnue <- with(amass_chem3, photo/percN)
   
 #plot sela photo vs chem habitats (wont work now, have to susbet sela)--------
 
-plot(amass ~ nmass, data=amass_chem, col=trtcols2[habitat], pch=16, ylim=c(0, 1200), xlim=c(0,16))
-legend("topleft", trtlab, pch=16, col=palette(), bty='n', inset=.01)
-
-plot(amass ~ pmass, data=amass_chem, col=trtcols2[habitat], pch=16, ylim=c(0, 1200), xlim=c(0, 1.6))
-legend("topleft", trtlab, pch=16, col=palette(), bty='n', inset=.01)
-
-
-amass_chem$habitat <- factor(amass_chem$habitat, levels=c("full_sun","understory_midlight",
-                                                          "understory_lowlight","swamp_lowlight"))
-# write.csv(amass_chem, "calculated_data/sela_photo_chem.csv", row.names = FALSE)
-
-boxplot(percN ~ habitat, data=amass_chem, col=trtcols)
-boxplot(percP ~ habitat, data=amass_chem, col=trtcols)
-boxplot(cn_ratio ~ habitat, data=amass_chem, col=trtcols)
-boxplot(lma_µgpermm2 ~ habitat, data=amass_chem, col=trtcols)
-boxplot(photo ~ habitat, data=amass_chem, col=trtcols)
-boxplot(cond ~ habitat, data=amass_chem, col=trtcols)
-boxplot(chlorophyll_mgperl ~ habitat, data=amass_chem, col=trtcols)
+# boxplot(percN ~ habitat, data=amass_chem, col=trtcols)
+# boxplot(percP ~ habitat, data=amass_chem, col=trtcols)
+# boxplot(cn_ratio ~ habitat, data=amass_chem, col=trtcols)
+# boxplot(lma_µgpermm2 ~ habitat, data=amass_chem, col=trtcols)
+# boxplot(photo ~ habitat, data=amass_chem, col=trtcols)
+# boxplot(cond ~ habitat, data=amass_chem, col=trtcols)
+# boxplot(chlorophyll_mgperl ~ habitat, data=amass_chem, col=trtcols)
 
 
 #phot vs chem on a mass basis (ferns vs sela)--------

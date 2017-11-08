@@ -2,35 +2,25 @@ source("master_scripts/plot_objects.R")
 #stomata density and gas exchange
 
 stom <- read.csv("raw_data/leaf_anatomy.csv")
-treat <- read.csv("raw_data/treatments.csv")
-  stom <- merge(stom, treat)
-
 cond <- read.csv("raw_data/gas_exchange.csv")
 
 
 stomcond <- droplevels(merge(stom, cond, all = TRUE))
-
+stomcond2 <- stomcond[complete.cases(stomcond),]
 
 # plotting ----------------------------------------------------------------
+stomcond_mod<- lm(cond ~ stomatadensity_numbpermm2 ,data=stomcond2)
+stomphoto_mod<- lm(photo ~ stomatadensity_numbpermm2 ,data=stomcond2)
 
+familycols <- c("cornflowerblue", "forestgreen")
 
-plot(cond ~ stomataldensity_controlarea, col=trtcols2[habitat], data=stomcond, pch = 16, 
-     ylim=c(0, .25), xlim=c(0, 550))
-legend("topleft", trtlab, pch=16, col=palette(), bty='n', inset=.01)
+plot(cond ~ stomatadensity_numbpermm2, col=familycols[family], data=stomcond2, pch = 16,
+     ylim=c(0, .3), xlim=c(0,150))
+legend("topright", legend=c("Ferns", "Selaginella"), col=familycols,
+       pch=16, bty='n', inset=.01)
 
+plot(photo ~ stomatadensity_numbpermm2, col=familycols[family], data=stomcond2, pch = 16,
+     ylim=c(0,9), xlim=c(0, 120))
+legend("topleft", legend=c("Ferns", "Selaginella"), col=familycols,
+       pch=16, bty='n', inset=.01)
 
-
-plot(cond ~ stomatadensity_numbpermm2, col=trtcols[habitat], data=stomcond, pch = 16, 
-     ylim=c(0, .25), xlim=c(0, 160))
-legend("topright", trtlab, pch=16, col=palette(), bty='n', inset=.01)
-
-plot(cond ~ stomatalarea_mm2, col=trtcols[habitat], data=stomcond, pch = 16, 
-     ylim=c(0, .25), xlim=c(0, .8))
-
-
-stomcond$habitat <- factor(amass_chem$habitat, levels=c("full_sun","understory_midlight",
-                                                          "understory_lowlight","swamp_lowlight"))
-
-boxplot(stomataldensity_controlarea ~ habitat, data=stomcond, col=trtcols)
-boxplot(stomatadensity_numbpermm2 ~ habitat, data=stomcond, col=trtcols)
-boxplot(stomatalarea_mm2 ~ habitat, data=stomcond, col=trtcols)
