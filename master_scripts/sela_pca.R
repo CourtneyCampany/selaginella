@@ -19,7 +19,7 @@ sela_dca <- decorana(na.omit(sela3))
 summary(sela_dca, display = 'none') #since axis length is less than 3 so we use PCA
 
 #principle compoent analysis with scales variances
-sela_rda<- rda(na.omit(sela3),scale=T)
+sela_rda<- rda(sela3,scale=T)
 plot(sela_rda)
 summary(sela_rda)
 

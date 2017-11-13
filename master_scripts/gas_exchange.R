@@ -3,20 +3,19 @@ source("functions.R")
 #gas exchange date for seligenalla and other ferns
 
 amax <- read.csv("raw_data/gas_exchange.csv") 
-# treat <- read.csv("raw_data/treatments.csv")
-#   amax <- merge(amax, treat)
 
 # calcualte Amass ---------------------------------------------------------
 
 #need LMA
 lma <- read.csv("raw_data/leaf_anatomy.csv")
-  lma <- lma[,c(1:3,5)]
-  lma$sla <- 1/lma$lma_µgpermm2 #m2/ug
+  lma <- lma[,c(1:3,5)] #units are wrong, not ugpermm2, suppose to be g cm2?
+  lma$sla <- 1/lma$lma_µgpermm2 #check with literature
+  
 library(doBy)
 lma_agg <- summaryBy(sla ~ species, data=lma, FUN=mean, keep.names = TRUE)
 #merge with photo and use sla to calculate amass (watch units)
 amass <- merge(amax ,lma)
-  amass$amass <- with(amass, photo * sla *1000) #umols co2/ug 
+  amass$amass <- with(amass, photo * sla *1000) ####start here and get units right
 
 # amass versus nitro ------------------------------------------------------
 
@@ -28,10 +27,9 @@ chem <- read.csv("raw_data/leaf_chemistry.csv")
   
 amass_chem <- merge(amass, chem, all = TRUE)  
 # write.csv(amass_chem, "calculated_data/sela_photo_chem.csv", row.names = FALSE)
-amass_chem2 <- amass_chem[,c(1:9, 11,17:18)]
+amass_chem2 <- amass_chem[,c(1:9, 14:18)]#can remove pmass to add one more row
 amass_chem3 <- amass_chem2[complete.cases(amass_chem2),]
-amass_chem3$pnue2 <- with(amass_chem3, amass/nmass)
-amass_chem3$pnue <- with(amass_chem3, photo/percN)
+amass_chem3$pnue <- with(amass_chem3, amass/nmass)
   
 #plot sela photo vs chem habitats (wont work now, have to susbet sela)--------
 
@@ -47,8 +45,7 @@ amass_chem3$pnue <- with(amass_chem3, photo/percN)
 #phot vs chem on a mass basis (ferns vs sela)--------
 familycols <- c("cornflowerblue", "forestgreen")
 
-plot(amass ~ nmass, data=amass_chem3, col=familycols[family], pch=16, 
-  xlim=c(0, 18), ylim=c(0,1200))
+plot(amass ~ nmass, data=amass_chem3, col=familycols[family], pch=16)
 legend("topleft", legend=c("Ferns", "Selaginella"), col=familycols,
       pch=16, bty='n', inset=.01)
 
@@ -56,13 +53,17 @@ legend("topleft", legend=c("Ferns", "Selaginella"), col=familycols,
 # legend("topleft", legend=c("Ferns", "Selaginella"), col=familycols,
 #        pch=16, bty='n', inset=.01)
 
+plot(amass ~ nmass, data=amass_chem3[amass_chem3$species != "Sel_eur",], 
+     col=familycols[family], pch=16)
+legend("topleft", legend=c("Ferns", "Selaginella"), col=familycols,
+       pch=16, bty='n', inset=.01)
 
 #PNUE--------
 #delete one outlier
 amass_chem4 <- droplevels(amass_chem3[amass_chem3$pnue2 < 200,])
 
 library(scales)
-lma_pnue_mod<- lm(pnue2~ lma_µgpermm2 ,data=amass_chem4)
+lma_pnue_mod<- lm(pnue~ lma_µgpermm2 ,data=amass_chem4)
 
 # boxplot(amass/nmass ~ family, data=amass_chem4, col=familycols, outline=FALSE, ylab="PNUE")
 # boxplot(amass/pmass ~ family, data=amass_chem4, col=familycols, outline=FALSE, ylab="PPUE")
