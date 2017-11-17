@@ -66,7 +66,9 @@ endfri <- max(friday$datetime)
 xAT_fri <- seq(from=startfri,to=endfri, by="hour", tz="UTC")
 
 #omit closed canopy-open (messed up humiity values)
-windows(7,10)
+png(filename = "output/airvars.png", width = 11, height = 8.5, units = "in", res= 400)
+
+# windows(7,10)
 par(mfrow=c(3,1), las=1, cex.axis=1.21, cex.lab=1.51, mgp=c(2.5,1,0),oma=c(4, 0, 1,0),
     lwd=2)
 
@@ -99,5 +101,5 @@ plot(vpd ~ datetime, data=friday[friday$site=="sel_anc",], ylim=c(0, 0.5),
   points(vpd ~ datetime, data=friday[friday$site=="sel_umb",], col="red3", type='l')
 axis.POSIXct(1, at=xAT_fri, format = "%H:%M:%S", las=3)
 
-dev.copy2pdf(file= "output/airvars.pdf")
+# dev.copy2pdf(file= "output/airvars.pdf")
 dev.off()

@@ -34,33 +34,34 @@ stoma_agg <- doBy::summaryBy(stomatadensity_numbpermm2 ~ species, data=stom,
                              FUN=c(mean, se))
 
 
-#stomatal density
-windows(8,6)
-par(mar=c(5,5,2,2), las=1)
-boxplot(stomatadensity_numbpermm2 ~ species, data=stom, ylab=denslab, 
-        xaxt='n', outline=FALSE,at=c(1:7, 9:13), ylim=c(0, 130))
-axis(1, at=c(1:7, 9:13), labels=FALSE)
-text(cex=1, x=c(1:7, 9:13), y=-20, labels=specieslabs2, xpd=TRUE, srt=90)
+####need to change outer axis limits so that inside margins stay the same and the plot regions are the same
 
-par(fig=c(0.6, 0.9, 0.6,0.9), mar=c(2,2,0,0),mgp=c(1,1,0),new=T, 
-    cex=1 ,las=1,  cex.axis=1, cex.lab=1, tcl=-.25)
-boxplot(stomatadensity_numbpermm2 ~ family, data=stom, ylab="", xlab="",
-        outline=FALSE, ylim=c(0, 125))
-dev.copy2pdf(file= "output/sd_fig.pdf")
-dev.off()
+png(filename = "output/stomata.png", width = 11, height = 8.5, units = "in", res= 400)
+
+windows()
+par(mfrow=c(2,1), las=1, cex.axis=1, cex.lab=1.25, mgp=c(3,1,0), oma=c(5.5,0,0,0))
+#stomatal density
+par(mar=c(0,5,1,1))
+boxplot(stomatadensity_mm2 ~ species, data=stom, ylab=denslab,
+        xaxt='n', outline=FALSE,at=c(1:7, 9:13), ylim=c(0, 130))
+axis(1, at=c(1:7, 9:13), labels=FALSE, tcl=.5)
 
 #stomatal length
-windows(8,6)
-par(mar=c(5,5,2,2), las=1)
+par(mar=c(0,5,0,1), xpd=TRUE)
 boxplot(length_um ~ species, data=stomsize2, ylab="Stomatal Length  (um)", 
         xaxt='n', outline=FALSE,at=c(1:7, 9:13), ylim=c(0, 70))
 axis(1, at=c(1:7, 9:13), labels=FALSE)
-text(cex=1, x=c(1:7, 9:13), y=-12, labels=specieslabs2, xpd=TRUE, srt=90)
+# text(cex=1.25, x=c(1:7, 9:13)+.2, y=8.5, labels=specieslabs2, xpd=TRUE, srt=90, pos=2)
+# mtext(side=1, at=c(1:7, 9:13)-.1,line=8, text=specieslabs2, xpd=TRUE, las=2, cex=1.25)
+#insets are more complicated with panel figure, add them now
+par(fig=c(0.65, 0.95, 0.7,0.95), mar=c(2,2,0,0), mgp=c(1,.25,0), new=T,
+    cex=1 ,las=1, tcl=-.2)
+boxplot(stomatadensity_mm2 ~ family, data=stom, ylab="", xlab="",
+        outline=FALSE, ylim=c(0, 125))
 
-par(fig=c(0.15, 0.45, 0.6,0.9), mar=c(2,2,0,0),mgp=c(1,1,0),new=T, 
-    cex=1 ,las=1,  cex.axis=1, cex.lab=1, tcl=-.25)
-boxplot(length_um ~ family, data=stomsize2, ylab="", xlab="",ylim=c(0,60),
+par(fig=c(0.15, 0.45, 0.23,0.48), mar=c(2,2,0,0),mgp=c(1,.25,0),new=T, las=1, tcl=-.2)
+boxplot(length_um ~ family, data=stomsize2, ylab="", xlab="",ylim=c(0,65),
         outline=FALSE)
 
-dev.copy2pdf(file= "output/sl_fig.pdf")
-dev.off()
+# dev.copy2pdf(file= "output/sl_fig.pdf")
+# dev.off()
