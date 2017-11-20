@@ -38,7 +38,7 @@ stoma_agg <- doBy::summaryBy(stomatadensity_numbpermm2 ~ species, data=stom,
 
 png(filename = "output/stomata.png", width = 11, height = 8.5, units = "in", res= 400)
 
-windows()
+# windows()
 par(mfrow=c(2,1), las=1, cex.axis=1, cex.lab=1.25, mgp=c(3,1,0), oma=c(5.5,0,0,0))
 #stomatal density
 par(mar=c(0,5,1,1))
@@ -51,8 +51,11 @@ par(mar=c(0,5,0,1), xpd=TRUE)
 boxplot(length_um ~ species, data=stomsize2, ylab="Stomatal Length  (um)", 
         xaxt='n', outline=FALSE,at=c(1:7, 9:13), ylim=c(0, 70))
 axis(1, at=c(1:7, 9:13), labels=FALSE)
+mtext(side=1, at=1:7, line=1,text=specieslabs2[1:7], xpd=TRUE, las=2, cex=1.25)
+mtext(side=1, at=9:13, line=1,text=specieslabs2[8:12], xpd=TRUE, las=2, cex=1.25)
+
 # text(cex=1.25, x=c(1:7, 9:13)+.2, y=8.5, labels=specieslabs2, xpd=TRUE, srt=90, pos=2)
-# mtext(side=1, at=c(1:7, 9:13)-.1,line=8, text=specieslabs2, xpd=TRUE, las=2, cex=1.25)
+
 #insets are more complicated with panel figure, add them now
 par(fig=c(0.65, 0.95, 0.7,0.95), mar=c(2,2,0,0), mgp=c(1,.25,0), new=T,
     cex=1 ,las=1, tcl=-.2)
@@ -63,5 +66,6 @@ par(fig=c(0.15, 0.45, 0.23,0.48), mar=c(2,2,0,0),mgp=c(1,.25,0),new=T, las=1, tc
 boxplot(length_um ~ family, data=stomsize2, ylab="", xlab="",ylim=c(0,65),
         outline=FALSE)
 
+
 # dev.copy2pdf(file= "output/sl_fig.pdf")
-# dev.off()
+ dev.off()
