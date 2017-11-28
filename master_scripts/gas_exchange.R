@@ -31,7 +31,7 @@ amass_chem <- merge(amass, chem_sela, all = TRUE)
   amass_chem$nmass <- with(amass_chem, leaf_mass_g * percN)
   amass_chem$pmass <- with(amass_chem, leaf_mass_g * percP)
 
-# write.csv(amass_chem, "calculated_data/sela_photo_chem.csv", row.names = FALSE)
+#write.csv(amass_chem, "calculated_data/sela_photo_chem.csv", row.names = FALSE)
 # amass_chem2 <- amass_chem[,c(1:9, 14:18)]#can remove pmass to add one more row
 amass_chem3 <- amass_chem[complete.cases(amass_chem),]
 amass_chem3$nue <- with(amass_chem3, amass/nmass)
