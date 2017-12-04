@@ -1,6 +1,6 @@
 species,habitat
-Sel_anc,understory_lowlight
-Sel_art,understory_lowlight
+Sel_anc,swamp_lowlight
+Sel_art,understory_midlight
 Sel_ate,understory_midlight
 Sel_eur,understory_midlight
 Sel_oax,swamp_lowlight
