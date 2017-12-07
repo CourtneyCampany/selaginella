@@ -1,10 +1,10 @@
-source("scripts/functions.R")
+source("functions.R")
 #selaginella stats
 library(visreg)
 library(multcomp)
 library(car)
 
-#pca with selaginella
+#selaginella data
 sela <- read.csv("raw_data/sela_raw.csv")
 sela$species <- factor(sela$species, 
               levels=c("Sel_anc","Sel_art","Sel_ate","Sel_eur","Sel_oax","Sel_swim","Sel_umb"))
@@ -12,10 +12,10 @@ sela$species <- factor(sela$species,
 habitat <- read.csv("raw_data/treatments.csv")
 
 sela <- merge(sela, habitat)
-#run annova for each parameter 
+#run annova for each parameter, means and se are below 
 
-sela_agg <- doBy::summaryBy(.~ species, data=sela, FUN=m2, keep.names = TRUE)
-
+sela_agg <- doBy::summaryBy(.~ species, data=sela, FUN=mean2, keep.names = TRUE)
+sela_se <- doBy::summaryBy(.~ species, data=sela, FUN=se, keep.names = TRUE)
 
 # photosynthesis ----------------------------------------------------------
 asat_mod <- lm(asat ~ species, data=sela)
