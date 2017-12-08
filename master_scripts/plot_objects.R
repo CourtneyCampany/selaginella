@@ -19,8 +19,8 @@ denslab <- expression(Stomatal~Density~~(mm^2))
 lmalab <- expression(Leaf~Mass~Area~~(mu*g~mm^-2))
 stomarealab <- expression(Stomatal~Area~~(mm^2))
 
-lmalab <- expression(LMA~~(g~cm^-2))
-nuelab <- expression(Nitrogen~Use~Efficiency~~(units))
+lmalab <- expression(LMA~~(g~m^-2))
+nuelab <- expression(Nitrogen~Use~Efficiency~~(mu*mols~CO[2]~g~N^-1~s^-1))
 puelab <- expression(Phosphorus~Use~Efficiency~~(units))
 
 #treatment colors

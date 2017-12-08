@@ -22,7 +22,7 @@ terr <- fern_cr[fern_cr$habitat=="terrestrial" | fern_cr$habitat == "hemi-epiphy
 
 png(filename = "output/lma_nitro.png", width = 11, height = 8.5, units = "in", res= 400)
 #windows(7,7)
-par(mar=c(5,5,2,2), las=1)
+par(mar=c(5,5,2,2), las=1,cex.axis=0.8,)
 plot(percN.mean ~ lma_gpercm2.mean, data=sela_agg, xlim=c(0, 55), ylim=c(0, 6.5), 
     col=famcols[family], xlab=lmalab, ylab="Leaf Nitrogen (%)", type='n')
 with(sela_agg, arrows(lma_gpercm2.mean, percN.mean, lma_gpercm2.mean, 
