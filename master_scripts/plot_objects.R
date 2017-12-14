@@ -20,8 +20,10 @@ lmalab <- expression(Leaf~Mass~Area~~(mu*g~mm^-2))
 stomarealab <- expression(Stomatal~Area~~(mm^2))
 
 lmalab <- expression(LMA~~(g~m^-2))
-nuelab <- expression(Nitrogen~Use~Efficiency~~(mu*mols~CO[2]~g~N^-1~s^-1))
-puelab <- expression(Phosphorus~Use~Efficiency~~(units))
+nuelab <- expression(atop(NNUE,
+                          (mu*mols~CO[2]~g~N^-1~s^-1)))
+puelab <- expression(atop(PPUE, 
+                          (mu*mols~CO[2]~g~P^-1~s^-1)))
 
 #treatment colors
 gradient <- colorRampPalette(c("orange", "forestgreen"))

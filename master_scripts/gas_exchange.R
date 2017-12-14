@@ -17,33 +17,43 @@ alldata$nue <- with(alldata, amass/nmass)
 alldata$pue <- with(alldata, amass/pmass)
 
 
+#### nue/pue models with lma -----
+
 #amass relationshsip  
 lma_pnue_mod<- lm(nue~ LMA, data=alldata)
-summary(lma_pnue_mod)  
-anova(lma_pnue_mod)
+# summary(lma_pnue_mod)  
+# anova(lma_pnue_mod)
 
-# plot(amass~ nmass, data=alldata, col=family, pch=16)
-# plot(amass~ pmass, data=alldata, col=species, pch=16)
+lma_ppue_mod<- lm(pue~ LMA, data=alldata)
+# summary(lma_pnue_mod)  
+# anova(lma_pnue_mod)
+
+
+###plotting ------
+library(scales)
+famcols2 <- alpha(familycols, .75)
+
+png(filename = "output/lma_npue.png", width = 11, height = 8.5, units = "in", res= 400)
 
 # windows(7,7)
-png(filename = "output/lma_nue.png", width = 11, height = 8.5, units = "in", res= 400)
-par(mar=c(5,5,2,2), las=1,cex.axis=0.8)
-plot(nue~ LMA, data=alldata, xlab=lmalab, ylab=nuelab,ylim=c(0, 36), xlim=c(0, 26), type='n')
-legend("topright", legend=c("Ferns", "Selaginella"), col=familycols,  pch=16, bty='n', inset=.01)
+par(mfrow=c(2,1), las=1, cex.axis=1, cex.lab=1.25, mgp=c(3,1,0), oma=c(6,6,1,1))
+
+par(mar=c(0,0,0,0), xpd=TRUE)
+plot(nue~ LMA, data=alldata, ylim=c(0, 36), xlim=c(0, 26), type='n', xaxt='n')
+legend("topright", legend=c("Ferns", "Selaginella"), col=familycols,  pch=16, 
+       bty='n', inset=.01, cex=1, pt.cex=1.25)
 predline(lma_pnue_mod, col="grey20",lwd=2, lty=2)
-points(nue~ LMA, data=alldata, pch=16, col=familycols[family], cex=1.5)
+points(nue~ LMA, data=alldata, pch=16, col=famcols[family], cex=1.5)
+axis(1, labels=FALSE, tcl=.5)
+mtext(side=2, at=18, line=3,text=nuelab, xpd=TRUE, las=3, cex=1)
+text('A', x=0, y=35, cex=1.25)
+
+par(mar=c(0,0,0,0),xpd=TRUE )
+plot(pue~ LMA, data=alldata, xlab=lmalab, ylab="", xlim=c(0, 26), ylim=c(0, 420),type='n')
+predline(lma_ppue_mod, col="grey20",lwd=2, lty=2)
+points(pue~ LMA, data=alldata, pch=16, col=famcols[family], cex=1.5)
+mtext(side=2, at=210, line=3,text=puelab, xpd=TRUE, las=3, cex=1)
+mtext(side=1, at=13, line=3,text=lmalab, xpd=TRUE, las=1, cex=1)
+text('B', x=0, y=400, cex=1.25)
+
 dev.off()
-
-#can add pue if we want
-# plot(pue~ LMA, data=alldata, col=family, pch=16)
-lma_ppue_mod<- lm(pue~ LMA, data=alldata)
-summary(lma_pnue_mod)  
-anova(lma_pnue_mod)
-
-# par(mar=c(5,5,2,2), las=1,cex.axis=0.8)
-# plot(pue~ LMA, data=alldata, xlab=lmalab, ylab="PPUE", xlim=c(0, 26), type='n')
-# legend("topright", legend=c("Ferns", "Selaginella"), col=familycols,  pch=16, bty='n', inset=.01)
-# predline(lma_ppue_mod, col="grey20",lwd=2, lty=2)
-# points(pue~ LMA, data=alldata, pch=16, col=familycols[family], cex=1.5)
-
-##could test if the slopes are different between groups, could also look at slopes between habitats
