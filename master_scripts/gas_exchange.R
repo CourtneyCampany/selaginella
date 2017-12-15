@@ -16,7 +16,7 @@ alldata$pmass <- with(alldata, P * 10)
 alldata$nue <- with(alldata, amass/nmass)
 alldata$pue <- with(alldata, amass/pmass)
 
-
+pue_dat <- alldata[alldata$pue < 400,]
 #### nue/pue models with lma -----
 
 #amass relationshsip  
@@ -24,9 +24,9 @@ lma_pnue_mod<- lm(nue~ LMA, data=alldata)
 # summary(lma_pnue_mod)  
 # anova(lma_pnue_mod)
 
-lma_ppue_mod<- lm(pue~ LMA, data=alldata)
-# summary(lma_pnue_mod)  
-# anova(lma_pnue_mod)
+lma_ppue_mod<- lm(pue~ LMA, data=pue_dat)
+summary(lma_ppue_mod)  
+# anova(lma_ppue_mod)
 
 
 ###plotting ------
@@ -49,11 +49,11 @@ mtext(side=2, at=18, line=3,text=nuelab, xpd=TRUE, las=3, cex=1)
 text('A', x=0, y=35, cex=1.25)
 
 par(mar=c(0,0,0,0),xpd=TRUE )
-plot(pue~ LMA, data=alldata, xlab=lmalab, ylab="", xlim=c(0, 26), ylim=c(0, 420),type='n')
+plot(pue~ LMA, data=pue_dat, xlab=lmalab, ylab="", xlim=c(0, 26), ylim=c(0, 350),type='n')
 predline(lma_ppue_mod, col="grey20",lwd=2, lty=2)
-points(pue~ LMA, data=alldata, pch=16, col=famcols[family], cex=1.5)
+points(pue~ LMA, data=pue_dat, pch=16, col=famcols[family], cex=1.5)
 mtext(side=2, at=210, line=3,text=puelab, xpd=TRUE, las=3, cex=1)
 mtext(side=1, at=13, line=3,text=lmalab, xpd=TRUE, las=1, cex=1)
-text('B', x=0, y=400, cex=1.25)
+text('B', x=0, y=345, cex=1.25)
 
 dev.off()
