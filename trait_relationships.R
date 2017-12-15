@@ -6,8 +6,7 @@ library(visreg)
 library(multcomp)
 library(smatr)
 
-##i dont beleive we have light response curves for all ferns
-##do not have chlorophyll for ferns
+##do not have chlorophyll or lcp for ferns
 
 alldata <- read.csv("raw_data/master_data.csv")
   alldata$sla <- with(alldata, 1/LMA)
@@ -22,8 +21,13 @@ sela <- alldata[alldata$family=="Selaginella",]
 hab <- read.csv("raw_data/treatments.csv")
 sela2 <- merge(sela, hab)
 
+palette(rainbow(3)) 
+
 #a vs gs--------
-plot(asat ~ gs, data=sela, col=species, pch=16)
+windows()
+plot(asat ~ gs, data=sela2, col=habitat, pch=16)
+legend("topleft",col=palette(),pch=16,legend=unique(sela2$habitat), bty='n')
+
 asatgs_mod <- lm(asat ~ gs, data=sela)
 summary(asatgs_mod)
 #r2 = 0.78, p=0.001
@@ -31,6 +35,7 @@ summary(asatgs_mod)
 #slopes of habitat
 asatgs_mod2 <- sma(asat ~ gs * habitat, data=sela2)
 summary(asatgs_mod2)
+windows()
 plot(asatgs_mod2)
 plot(asatgs_mod2, which='residual') 
 plot(asatgs_mod2, which='qq')
@@ -39,15 +44,17 @@ asatgs_mod3 <- lm(asat ~ gs, data=ferns)
 summary(asatgs_mod3)
 
 
+
 #### amass vs lma--------
-plot(amass ~ LMA, data=sela, col=species, pch=16)
-amasslma_mod <- lm(amass ~ LMA, data=sela)
+plot(amass ~ LMA, data=sela2, col=habitat, pch=16)
+amasslma_mod <- lm(amass ~ LMA, data=sela2)
 summary(amasslma_mod)
 #r2 = 29, p<0.001
 
 #slopes of habitat
 amasslma_mod2 <- sma(amass ~ LMA * habitat, data=sela2)
 summary(amasslma_mod2)
+windows()
 plot(amasslma_mod2)
 plot(amasslma_mod2, which='residual') 
 plot(amasslma_mod2, which='qq')
