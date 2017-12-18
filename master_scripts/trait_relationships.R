@@ -65,7 +65,6 @@ summary(amasslma_mod3)
 plot(amass ~ LMA, data=ferns, col=species, pch=16)
 
 
-
 #gs/an vs stomata ------
 plot(gs ~ sto_dens, data=alldata, col=family, pch=16)
 plot(gs~ sto_dens, data=sela, col=species, pch=16)
@@ -152,6 +151,7 @@ plot(chlorophyll ~ N, data=sela2, col=habitat)
   
   
 #photo vs n/p (add CI and look at habitat relationships)---need area basis???-----
+  
 plot(asat ~ narea, data=alldata, col=family, pch=16) 
 plot(amass ~ nmass, data=alldata, col=family, pch=16) 
   
@@ -193,8 +193,6 @@ Pphoto_mod5 <- sma(amass ~ pmass * habitat, data=sela2)
 summary(Pphoto_mod5)
 windows()
 plot(Pphoto_mod5)
-
-
 
 #Resource use effiency and LMA-------
 plot(nue~LMA, data=alldata)
