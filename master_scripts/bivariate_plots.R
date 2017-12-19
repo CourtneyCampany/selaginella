@@ -52,7 +52,7 @@ an_mod3 <- sma(amass ~ nmass, data=swamp)
 
 ### large panel plots (l=sela, r=ferns)-----
 # pdf("output/traits.pdf", width = 8, height = 12)
-png(filename = "output/traits.png", width = 8, height = 10, units = "in", res= 400)
+png(filename = "output/traits.png", width = 8, height = 9, units = "in", res= 400)
 
 layout(matrix(c(1:6), 3, 2) )
 
@@ -74,9 +74,9 @@ plot(gs ~ sto_dens, col=trtcols2[habitat], pch=16, data=sela2, xlim=c(0, 125),
      ylim=c(0, 0.25), ylab=condlab, xlab="", cex=1.5)
 mtext(side=1, text=denslab, line=3.5,at=125)
 text("C", x=0, y=.25, cex=1.25)
-ablineclip(gssd_mod1, col=trtcols[1], lwd=2, x1=73.04348, x2=134.32432, lty=1)
+# ablineclip(gssd_mod1, col=trtcols[1], lwd=2, x1=73.04348, x2=134.32432, lty=1)
 ablineclip(gssd_mod2, col=trtcols[2], lwd=2, x1=19.34783, x2=53.78378, lty=2)
-ablineclip(gssd_mod3, col=trtcols[3], lwd=2, x1=52.17391, x2=75., lty=1)
+# ablineclip(gssd_mod3, col=trtcols[3], lwd=2, x1=52.17391, x2=75., lty=1)
 
 par(mar=c(5,5,1,0))
 plot(amass ~ nmass  ,col=trtcols2[habitat], pch=16, data=sela2,  ylim=c(0,1000), ylab=amasslab,

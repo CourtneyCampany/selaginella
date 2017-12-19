@@ -18,8 +18,7 @@ xAT2 <- seq(from=startday,to=enddate2, length.out = 10, tz="UTC")
 
 cols <- c("red3","gray15","cornflowerblue","forestgreen")
 cols2 <- c("red3","cornflowerblue","forestgreen")
-sites <- c("Open Canopy/Full Sun", "Closed Canopy/Mid Light", "Closed Canopy/Low Light","Swamp/Low Light")
-sites2 <- c("Open Canopy/Full Sun",  "Closed Canopy/Low Light","Swamp/Low Light")
+sites <- c("Open Canopy/Full Sun",  "Closed Canopy/Low Light","Swamp/Low Light")
 
 # plot all data----------------------------------------------------------------
 windows(7,10)
@@ -55,13 +54,14 @@ points(vpd ~ datetime, data=clim[clim$site=="sel_oxa",], col="forestgreen", type
 points(vpd ~ datetime, data=clim[clim$site=="sel_umb",], col="red3", type='l')
 axis.POSIXct(1, at=xAT2, format = "%H:%M:%S", las=3)
 
-
 # plot one day ------------------------------------------------------------
 
 friday <- clim[clim$datetime >= "2011-06-30 02:00:00" & clim$datetime <= "2011-06-30 18:00:00",]
 
 startfri <- min(friday$datetime)
 endfri <- max(friday$datetime)
+
+startcex <- strptime("2011-06-30 05:45:00", tz= "UTC", format= "%Y-%m-%d %H:%M:%S")
 # enddate2 <- as.POSIXct("2011-07-01 14:00:00", tz="UTC")
 xAT_fri <- seq(from=startfri,to=endfri, by="hour", tz="UTC")
 
@@ -81,7 +81,8 @@ plot(temp_C ~ datetime, data=friday[friday$site=="sel_anc",], ylim=c(22, 32),
   points(temp_C ~ datetime, data=friday[friday$site=="sel_oxa",], col="forestgreen", type='l')
   points(temp_C ~ datetime, data=friday[friday$site=="sel_umb",], col="red3", type='l')
 axis.POSIXct(1, at=xAT_fri, format = "%H:%M:%S", labels=FALSE)
-legend("topright",col=cols2,lty=1,legend=sites2,inset=.01,  bty='n',cex=1.1)
+legend("topright",col=cols2,lty=1,legend=sites,inset=.01,  bty='n',cex=1.1)
+text("A", x=startcex, y= 31.5, cex=1.25)
 
 #2. dewpoint
 par(mar=c(0,5,0,1))
@@ -91,6 +92,7 @@ plot(dewpoint_C ~ datetime, data=friday[friday$site=="sel_anc",], ylim=c(20, 30)
   points(dewpoint_C ~ datetime, data=friday[friday$site=="sel_oxa",], col="forestgreen", type='l')
   points(dewpoint_C ~ datetime, data=friday[friday$site=="sel_umb",], col="red3", type='l')
 axis.POSIXct(1, at=xAT_fri, format = "%H:%M:%S", labels=FALSE)
+text("B", x=startcex, y= 29.5, cex=1.25)
 
 #3. vpd
 par(mar=c(4,5,0,1))
@@ -100,6 +102,7 @@ plot(vpd ~ datetime, data=friday[friday$site=="sel_anc",], ylim=c(0, 0.5),
   points(vpd ~ datetime, data=friday[friday$site=="sel_oxa",], col="forestgreen", type='l')
   points(vpd ~ datetime, data=friday[friday$site=="sel_umb",], col="red3", type='l')
 axis.POSIXct(1, at=xAT_fri, format = "%H:%M:%S", las=3)
+text("C", x=startcex, y= 0.48, cex=1.25)
 
 # dev.copy2pdf(file= "output/airvars.pdf")
 dev.off()
