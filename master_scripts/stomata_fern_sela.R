@@ -41,7 +41,7 @@ png(filename = "output/stomata.png", width = 11, height = 8.5, units = "in", res
  #stomatal density
  par(mar=c(0,0,0,0))
  boxplot(stomatadensity_mm2 ~ species, data=stom, ylab="", xlab="",yaxt='n',xaxt='n',
-         outline=FALSE, ylim=c(0, 130))
+         outline=FALSE, at=c(1:7, 9:13), ylim=c(0, 130))
  axis(1, at=c(1:7, 9:13), labels=FALSE, tcl=.5)
  axis(2, labels=TRUE)
  mtext(side=2, at=65, line=3,text=denslab, xpd=TRUE, las=3, cex=1)
