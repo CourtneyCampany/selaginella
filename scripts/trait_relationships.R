@@ -5,6 +5,7 @@ source("master_scripts/plot_objects.R")
 library(visreg)
 library(multcomp)
 library(smatr)
+library(emmeans)
 
 ##do not have chlorophyll or lcp for ferns
 
@@ -44,7 +45,6 @@ plot(asatgs_mod2, which='qq')
 
 asatgs_mod3 <- lm(asat ~ gs, data=ferns)
 summary(asatgs_mod3)
-
 
 #### amass vs lma--------
 plot(amass ~ LMA, data=sela2, col=habitat, pch=16)

@@ -3,6 +3,7 @@ source("functions.R")
 library(visreg)
 library(multcomp)
 library(car)
+library(lme4)
 
 #selaginella data
 sela <- read.csv("raw_data/sela_raw.csv")
@@ -14,31 +15,29 @@ habitat <- read.csv("raw_data/treatments.csv")
 sela <- merge(sela, habitat)
 #run annova for each parameter, means and se are below 
 
-sela_agg <- doBy::summaryBy(.~ species, data=sela, FUN=mean2, keep.names = TRUE)
-sela_se <- doBy::summaryBy(.~ species, data=sela, FUN=se, keep.names = TRUE)
-
-
-# pnue --------------------------------------------
 sela$amass <- with(sela, (asat*1000) * (1/LMA)) ####nmols CO2 g s
 sela$nmass <- with(sela, N*10) #mg g-1 (g g-1 = .01 (1%) and 1000)
 sela$pmass <- with(sela, P * 10)
 sela$nue <- with(sela, amass/nmass)
 sela$pue <- with(sela, amass/pmass)
 
-plot(nue~LMA, data=sela, xlim=c(0,20), ylim=c(0, 35))
+sela_agg <- doBy::summaryBy(.~ species, data=sela, FUN=mean2, keep.names = TRUE)
+sela_se <- doBy::summaryBy(.~ species, data=sela, FUN=se, keep.names = TRUE)
 
+#nue --------------------------------------------
 pnue_mod <- lm(nue ~ species, data=sela)
-
-visreg(pnue_mod)
-residualPlot(pnue_mod)
-qqPlot(pnue_mod)
-
-summary(pnue_mod)
-anova(pnue_mod)
+  visreg(pnue_mod)
+  residualPlot(pnue_mod)
+  qqPlot(pnue_mod)
+  summary(pnue_mod)
+  anova(pnue_mod)
 
 tukey_pnue <- glht(pnue_mod, linfct = mcp(species = "Tukey"))
 pnue_siglets <-cld(tukey_pnue)
 pnue_siglets2 <- pnue_siglets$mcletters$Letters
+
+min(sela_agg$nue)
+max(sela_agg$nue)
 
 #habitats (yes)
 pnue_mod2 <- lm(nue ~ habitat, data=sela)
@@ -46,18 +45,22 @@ summary(pnue_mod2)
 anova(pnue_mod2)
 visreg(pnue_mod2)
 
+tukey_nue2 <- glht(pnue_mod2, linfct = mcp(habitat = "Tukey"))
+nue2_siglets <-cld(tukey_nue2)
+nue2_siglets2 <- nue2_siglets$mcletters$Letters
+
+ppue_mod <- lm(pue ~ species, data=sela)
+visreg(ppue_mod)
+residualPlot(ppue_mod)
+qqPlot(ppue_mod)
+summary(ppue_mod)
+anova(ppue_mod)
+
 #habitats (no)
 pue_mod2 <- lm(pue ~ habitat, data=sela)
 summary(pue_mod2)
 anova(pue_mod2)
 visreg(pue_mod2)
-
-tukey_nue2 <- glht(pnue_mod2, linfct = mcp(habitat = "Tukey"))
-nue2_siglets <-cld(tukey_nue2)
-nue2_siglets2 <- nue2_siglets$mcletters$Letters
-
-pnue_mod3 <- lm(nue ~ LMA * habitat, data=sela)
-anova(pnue_mod3)
 
 # photosynthesis ----------------------------------------------------------
 asat_mod <- lm(asat ~ species, data=sela)
@@ -247,6 +250,9 @@ visreg(sl_mod2)
 min(sela_agg$sto_length)
 max(sela_agg$sto_length)
 
+tukey_slh <- glht(sl_mod2, linfct = mcp(habitat = "Tukey"))
+slh_siglets <-cld(tukey_slh)
+slh_siglets2 <- slh_siglets$mcletters$Letters
 
 # ITE ----------------------------------------------------------
 ITE_mod <- lm(ITE ~ species, data=sela)

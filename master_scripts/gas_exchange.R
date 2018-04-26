@@ -4,6 +4,7 @@ source("master_scripts/plot_objects.R")
 #Fern vs Sela stats
 library(visreg)
 library(multcomp)
+library(lme4)
 
 ##i dont beleive we have light response curves for all ferns
 ##do not have chlorophyll for ferns
@@ -16,7 +17,12 @@ alldata$pmass <- with(alldata, P * 10)
 alldata$nue <- with(alldata, amass/nmass)
 alldata$pue <- with(alldata, amass/pmass)
 
+habitat <- read.csv("raw_data/treatments.csv")
+
+alldata <- merge(alldata, habitat)
+
 pue_dat <- alldata[alldata$pue < 400,]
+
 #### nue/pue models with lma -----
 
 #amass relationshsip  
@@ -27,6 +33,15 @@ lma_pnue_mod<- lm(nue~ LMA, data=alldata)
 lma_ppue_mod<- lm(pue~ LMA, data=pue_dat)
 summary(lma_ppue_mod)  
 # anova(lma_ppue_mod)
+
+###mixed effect with lma & habitat
+pnue_mod <- lmer(nue ~ LMA * habitat + (1|species), data=alldata)
+  library(arm)
+  library(car)
+  Anova(pnue_mod)
+
+ppue_mod <- lmer(pue ~ LMA * habitat + (1|species), data=pue_dat)
+  Anova(ppue_mod)
 
 
 ###plotting ------
