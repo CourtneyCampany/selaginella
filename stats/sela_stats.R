@@ -17,6 +17,48 @@ sela <- merge(sela, habitat)
 sela_agg <- doBy::summaryBy(.~ species, data=sela, FUN=mean2, keep.names = TRUE)
 sela_se <- doBy::summaryBy(.~ species, data=sela, FUN=se, keep.names = TRUE)
 
+
+# pnue --------------------------------------------
+sela$amass <- with(sela, (asat*1000) * (1/LMA)) ####nmols CO2 g s
+sela$nmass <- with(sela, N*10) #mg g-1 (g g-1 = .01 (1%) and 1000)
+sela$pmass <- with(sela, P * 10)
+sela$nue <- with(sela, amass/nmass)
+sela$pue <- with(sela, amass/pmass)
+
+plot(nue~LMA, data=sela, xlim=c(0,20), ylim=c(0, 35))
+
+pnue_mod <- lm(nue ~ species, data=sela)
+
+visreg(pnue_mod)
+residualPlot(pnue_mod)
+qqPlot(pnue_mod)
+
+summary(pnue_mod)
+anova(pnue_mod)
+
+tukey_pnue <- glht(pnue_mod, linfct = mcp(species = "Tukey"))
+pnue_siglets <-cld(tukey_pnue)
+pnue_siglets2 <- pnue_siglets$mcletters$Letters
+
+#habitats (yes)
+pnue_mod2 <- lm(nue ~ habitat, data=sela)
+summary(pnue_mod2)
+anova(pnue_mod2)
+visreg(pnue_mod2)
+
+#habitats (no)
+pue_mod2 <- lm(pue ~ habitat, data=sela)
+summary(pue_mod2)
+anova(pue_mod2)
+visreg(pue_mod2)
+
+tukey_nue2 <- glht(pnue_mod2, linfct = mcp(habitat = "Tukey"))
+nue2_siglets <-cld(tukey_nue2)
+nue2_siglets2 <- nue2_siglets$mcletters$Letters
+
+pnue_mod3 <- lm(nue ~ LMA * habitat, data=sela)
+anova(pnue_mod3)
+
 # photosynthesis ----------------------------------------------------------
 asat_mod <- lm(asat ~ species, data=sela)
 
@@ -83,6 +125,10 @@ visreg(chl_mod2)
 min(sela_agg$chlorophyll)
 max(sela_agg$chlorophyll)
 
+tukey_chl2 <- glht(chl_mod2, linfct = mcp(habitat = "Tukey"))
+chl2_siglets <-cld(tukey_chl2)
+chl2_siglets2 <- chl2_siglets$mcletters$Letters
+
 # LMA ----------------------------------------------------------
 LMA_mod <- lm(LMA ~ species, data=sela)
 
@@ -102,6 +148,10 @@ lma_mod2 <- lm(LMA ~ habitat, data=sela)
 summary(lma_mod2)
 anova(lma_mod2)
 visreg(lma_mod2)
+
+tukey_lma2 <- glht(lma_mod2, linfct = mcp(habitat = "Tukey"))
+lma2_siglets <-cld(tukey_lma2)
+lma2_siglets2 <- lma2_siglets$mcletters$Letters
 
 min(sela_agg$LMA)
 max(sela_agg$LMA)
