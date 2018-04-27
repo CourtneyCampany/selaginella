@@ -179,8 +179,21 @@ summary(N_mod2)
 anova(N_mod2)
 visreg(N_mod2)
 
+tukey_n2 <- glht(N_mod2, linfct = mcp(habitat = "Tukey"))
+n2_siglets <-cld(tukey_n2)
+n2_siglets2 <- n2_siglets$mcletters$Letters
+
 min(sela_agg$N)
 max(sela_agg$N)
+
+N_mod3 <- lm(nmass ~ habitat, data=sela)
+summary(N_mod3)
+anova(N_mod3)
+visreg(N_mod3)
+
+tukey_n3 <- glht(N_mod3, linfct = mcp(habitat = "Tukey"))
+n3_siglets <-cld(tukey_n3)
+n3_siglets2 <- n3_siglets$mcletters$Letters
 
 # P ----------------------------------------------------------
 p_mod <- lm(P ~ species, data=sela)
@@ -303,20 +316,6 @@ anova(lcp_mod)
 tukey_lcp<- glht(lcp_mod, linfct = mcp(species = "Tukey"))
 lcp_siglets <-cld(tukey_lcp)
 lcp_siglets2 <- lcp_siglets$mcletters$Letters
-
-
-lcp_mod <- lm(lcp ~ species, data=sela)
-
-visreg(lcp_mod)
-residualPlot(lcp_mod)
-qqPlot(lcp_mod)
-
-summary(lcp_mod)
-anova(lcp_mod)
-
-tukey_cn <- glht(cn_mod, linfct = mcp(species = "Tukey"))
-cn_siglets <-cld(tukey_cn)
-cn_siglets2 <- cn_siglets$mcletters$Letters
 
 #habitats
 lcp_mod2 <- lm(lcp ~ habitat, data=sela)

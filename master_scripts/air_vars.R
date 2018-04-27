@@ -7,7 +7,20 @@ clim <- read.csv("raw_data/microclimate.csv", stringsAsFactors = FALSE)
   clim$site <- as.factor(clim$site)
   library(plantecophys)
   clim$vpd <- RHtoVPD(RH=clim$rh_perc, TdegC=clim$temp_C, Pa=101)
-
+  
+  
+#max diff for discussion among habitats
+# open_max_t <- max(clim[clim$site == "sel_umb", 4])
+# open_max_vpd <- max(clim[clim$site == "sel_umb", 7])
+# 
+# open_cc_t <- max(clim[clim$site == "sel_anc", 4])
+# open_cc_vpd <- max(clim[clim$site == "sel_anc", 7])
+# 
+# open_swamp_t <- max(clim[clim$site == "sel_oxa", 4])
+# open_swamp_vpd <- max(clim[clim$site == "sel_oxa", 7])
+# 
+# tdiff <- (open_max_t - (open_cc_t+open_swamp_t)/2) / open_max_t
+# vdiff <- (open_max_vpd - (open_cc_vpd+open_swamp_vpd)/2) / open_max_vpd
 
 # plot objects ------------------------------------------------------------
 startday <- min(clim$datetime)
