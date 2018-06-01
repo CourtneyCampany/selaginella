@@ -37,11 +37,13 @@ namass_mod_fern<- lm(amass ~ nmass ,data=ferns)
 
 ## plot bits------
 library(scales)
-ferncol<- alpha("royalblue", .85)
-fernline <- "royalblue"
+ferncol<- 
 
 ##ploting-------
-windows()
+# windows()
+
+png(filename = "output/bivariate.png", width = 8, height = 9, 
+    units = "in", res= 400)
 
 layout(matrix(c(1:4), nrow=2, ncol=2) )
 par(las=1,  mgp=c(3,1,0), cex.lab=1.25)
@@ -58,6 +60,9 @@ text("A", x=0, y=9, cex=1.25)
 title(expression(italic(underline(Selaginella))), line=-1)
 mtext(side=1, text=condlab, line=3.5,at=.25)
 
+text(.04, 6.75, expression(paste(R[cond]^{"2"}," = "," 0.51")))
+text(.04, 5.9, expression(paste(R[marg]^{"2"}," = "," 0.91")))
+
 #amass v nmass
 par(mar=c(5,5,1,0))
 plot(amass ~ nmass, data=sela2, ylim=c(0,1000), ylab=amasslab,
@@ -67,27 +72,35 @@ points(amass ~ nmass, data=sela2, col=trtcols2[habitat], pch=16, cex=1.5)
 text("C", x=0, y=1000, cex=1.25)
 mtext(side=1, text=nmasslab, line=3.5,at=55)
 
+text(10, 800, expression(paste(R[cond]^{"2"}," = "," 0.43")))
+text(10, 700, expression(paste(R[marg]^{"2"}," = "," 0.81")))
+
 #fern: a gs
 par(mar=c(5,0,1,5))
 plot(asat ~ gs, data=ferns, yaxt="n", xlab="", ylim=c(0, 9),
      xlim=c(0,.27), ylab="")
-predline(asatgs_mod_fern, col="grey20",lwd=2)
-ablineclip(asatgs_mod_fern, col=fernline, lwd=2, x1=0.02358104, x2=0.23880560)
-points(asat ~ gs, data=ferns, col=ferncol, pch=16, cex=1.5)
+predline(asatgs_mod_fern, col="grey20",lwd=2, lty=2)
+# ablineclip(asatgs_mod_fern, col=fernline, lwd=2, x1=0.02358104, x2=0.23880560)
+points(asat ~ gs, data=ferns, col=trtcols2[3], pch=16, cex=1.5)
 text("B", x=0, y=9, cex=1.25)
 title(expression(underline(Ferns)),cex=1.25, line=-1)
+
+text(.04, 6.75, expression(paste(R[cond]^{"2"}," = "," 0.30")))
+text(.04, 5.9, expression(paste(R[marg]^{"2"}," = "," 0.71")))
 
 #fern - amass nmass
 par(mar=c(5,0,1,5))
 plot(amass ~ nmass, data=ferns,  ylim=c(0,1000), ylab="",
      xlim=c(0,55), xlab="",yaxt='n', type='n')
-predline(namass_mod_fern, col="grey20",lwd=2)
-ablineclip(namass_mod_fern, col=fernline, x1=24.2, x2=47.5, lwd=2)
-points(amass ~ nmass  ,col=ferncol, pch=16, data=ferns, cex=1.5)
+# predline(namass_mod_fern, col="grey20",lwd=2, lty=2)
+# ablineclip(namass_mod_fern, col=fernline, x1=24.2, x2=47.5, lwd=2)
+points(amass ~ nmass  ,col=trtcols2[3], pch=16, data=ferns, cex=1.5)
 text("D", x=0, y=1000, cex=1.25)
 
+# text(10, 800, expression(paste(R[cond]^{"2"}," = "," 0.43")))
+# text(10, 700, expression(paste(R[marg]^{"2"}," = "," 0.81")))
 
-dev.copy2pdf(file= "output/traits2.pdf")
+# dev.copy2pdf(file= "output/traits2.pdf")
 dev.off()
 
 
