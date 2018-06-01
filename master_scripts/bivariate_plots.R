@@ -79,10 +79,10 @@ ablineclip(gssd_mod2, col=trtcols[2], lwd=2, x1=19.34783, x2=53.78378, lty=2)
 # ablineclip(gssd_mod3, col=trtcols[3], lwd=2, x1=52.17391, x2=75., lty=1)
 
 par(mar=c(5,5,1,0))
-plot(amass ~ nmass  ,col=trtcols2[habitat], pch=16, data=sela2,  ylim=c(0,1000), ylab=amasslab,
+plot(amass ~ nmass  ,col=trtcols2[habitat], pch=16, data=sela2,  ylim=c(0,1225), ylab=amasslab,
      xlim=c(0,55),xlab="", cex=1.5)
 mtext(side=1, text=nmasslab, line=3.5,at=55)
-text("E", x=0, y=1000, cex=1.25)
+text("E", x=0, y=1225, cex=1.25)
 ablineclip(an_mod1, col=trtcols[1], lwd=2, x1=10.7, x2=20.9, lty=1)
 ablineclip(an_mod2, col=trtcols[2], lwd=2, x1=23.9, x2=44.9, lty=2)
 ablineclip(an_mod3, col=trtcols[3], lwd=2, x1=19.0, x2=28.0, lty=1)
@@ -101,10 +101,10 @@ ablineclip(sdcond_mod_fern, col=fernline, lwd=2, x1=min(ferns$sto_dens), x2=39.5
 text("D", x=0, y=.25, cex=1.25)
 
 par(mar=c(5,0,1,1))
-plot(amass ~ nmass  ,col=ferncol, pch=16, data=ferns,  ylim=c(0,1000), ylab="",
+plot(amass ~ nmass  ,col=ferncol, pch=16, data=ferns,  ylim=c(0,1225), ylab="",
      xlim=c(0,55), xlab="",yaxt='n', cex=1.5)
 ablineclip(namass_mod_fern, col=fernline, lwd=2, x1=24.2, x2=47.5, lty=2)
-text("F", x=0, y=1000, cex=1.25)
+text("F", x=0, y=1225, cex=1.25)
 
 # dev.copy2pdf(file= "output/traits.pdf")
 dev.off()
