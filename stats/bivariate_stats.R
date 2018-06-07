@@ -46,7 +46,7 @@ ags_mod <- lmer(asat ~ gs * habitat + (1|species), data=sela2)
 #P<o.ooo1
 
 #no interaction with habitat, but.....
-  ags_slopes <- lstrends(ags_mod, "habitat", var="gs")
+  ags_slopes <- lstrends(ags_mod, "habitat", var="gs") #obtain slopes
   pairs(ags_slopes)
 #not different
 
@@ -66,14 +66,29 @@ an_slopes <- lstrends(an_mod, "habitat", var="nmass")
 pairs(an_slopes)
 #not different
 
+##photo - P
+ap_mod <- lmer(amass ~ pmass * habitat + (1|species), data=sela2)
+
+Anova(ap_mod)
+summary(ap_mod)
+r.squaredGLMM(ap_mod)
+
+ap_slopes <- lstrends(ap_mod, "habitat", var="pmass")
+pairs(ap_slopes)
+
+#area based
+ap_mod_area <- lmer(asat ~ P * habitat + (1|species), data=sela2)
+Anova(ap_mod_area)
+
 #conductance & stomatal density
-gssd_mod <- lmer(gs ~ sto_dens * habitat + (1|species), data=sela2)
+gssd_mod <- lmer(asat ~ sto_dens * habitat + (1|species), data=sela2)
   Anova(gssd_mod)
   summary(gssd_mod)
   r.squaredGLMM(gssd_mod)
 #not significant
   
-  
+gssl_mod <- lmer(asat ~ sto_length * habitat + (1|species), data=sela2)
+  Anova(gssl_mod) 
   
 ##lma and NNUE & PPUE
 pnue_mod_sela <- lmer(nue ~ LMA * habitat+ (1|species), data=sela2)
@@ -87,7 +102,14 @@ pnue_mod_sela <- lmer(nue ~ LMA * habitat+ (1|species), data=sela2)
 ppue_mod_sela <- lmer(pue ~ LMA + habitat + (1|species), data=sela2)
   Anova(ppue_mod_sela)
   r.squaredGLMM(ppue_mod_sela)
-
+  
+##photo and lma
+plma_mod_sela <- lmer(amass ~ LMA * habitat+ (1|species), data=sela2)
+  Anova(plma_mod_sela)
+  r.squaredGLMM(plma_mod_sela)  
+  
+alma_slopes <- lstrends(plma_mod_sela, "habitat", var="LMA")
+  pairs(alma_slopes)
 
 #ferns-----
 ags_mod2 <- lmer(asat ~ gs + (1|species), data=ferns2)
@@ -98,18 +120,23 @@ ags_mod2 <- lmer(asat ~ gs + (1|species), data=ferns2)
   # 0.3021335 0.7076270
   #P=0.021
   
-an_mod3 <- lm(amass ~ nmass , data=ferns2)
-  Anova(an_mod3)
-  summary(an_mod3)
-  r.squaredGLMM(an_mod3)
-  
-  an_mod2 <- lmer(amass ~ nmass  + (1|species), data=ferns2)  
+an_mod2 <- lmer(amass ~ nmass  + (1|species), data=ferns2)  
+  Anova(an_mod2)
+  summary(an_mod2)
+  r.squaredGLMM(an_mod2)
 
+ap_mod2 <- lmer(amass ~ pmass  + (1|species), data=ferns2)  
+  Anova(ap_mod2)
+  summary(ap_mod2)
+  r.squaredGLMM(ap_mod2)  
+  
 gssd_mod2 <- lmer(gs ~ sto_dens  + (1|species), data=ferns2)
   Anova(gssd_mod2)
   summary(gssd_mod2)
   r.squaredGLMM(gssd_mod2)
-  
+
+gssl_mod2 <- lmer(gs ~ sto_length  + (1|species), data=ferns2)
+  Anova(gssl_mod2)  
   
 pnue_mod_fern <- lmer(nue ~ LMA + (1|species), data=ferns2)
   Anova(pnue_mod_fern)
@@ -124,3 +151,9 @@ ppue_mod_fern <- lmer(pue ~ LMA  + (1|species), data=pue_ferns)
   #R2m       R2c 
   #0.5819061 0.6511018 
   # P < 0.0001
+  
+ ##photo and lma
+  plma_mod_sela2 <- lmer(amass ~ LMA + (1|species), data=ferns)
+  Anova(plma_mod_sela2)
+  r.squaredGLMM(plma_mod_sela2)
+  
