@@ -1,6 +1,7 @@
 source("master_scripts/plot_objects.R")
 source("functions.R")
 library(doBy)
+library(vioplot)
 
 #stomatal figures between ferns and selaginella
 
@@ -25,13 +26,14 @@ stomsize2$species <- factor(stomsize2$species,
                             "Dip_stri","Lom_jap","Thy_cur"))
 
 
-specieslabs2 <- c("Sel_anc","Sel_art","Sel_ate","Sel_eur","Sel_oax","Sel_swim",
+specieslabs2 <- c("Sel_anc","Sel_art","Sel_ati","Sel_eur","Sel_oax","Sel_spp",
                   "Sel_umb","Bul_port","Cyc_semi","Dip_stri","Lom_jap","Thy_cur")
 
+sela_sl <- stomsize2[stomsize2$family == "Selaginella", "length_um"]
+fern_sl <- stomsize2[stomsize2$family == "Ferns", "length_um"]
 
-# examine species means -----------------------------------------------------------
-stoma_agg <- doBy::summaryBy(stomatadensity_numbpermm2 ~ species, data=stom, 
-                             FUN=c(mean, se))
+sela_sd <- stom[stom$family == "Selaginella", "stomatadensity_mm2"]
+fern_sd <- stom[stom$family == "Ferns", "stomatadensity_mm2"]
 
 #### 4 panel figure ------
 png(filename = "output/stomata.png", width = 11, height = 8.5, units = "in", res= 400)
@@ -41,23 +43,34 @@ png(filename = "output/stomata.png", width = 11, height = 8.5, units = "in", res
  #stomatal density
  par(mar=c(0,0,0,0))
  boxplot(stomatadensity_mm2 ~ species, data=stom, ylab="", xlab="",yaxt='n',xaxt='n',
-         outline=FALSE, at=c(1:7, 9:13), ylim=c(0, 130))
+         outline=FALSE, at=c(1:7, 9:13), ylim=c(0, 135), 
+         whisklwd=2,whisklty=1,staplelty = 0)
  axis(1, at=c(1:7, 9:13), labels=FALSE, tcl=.5)
  axis(2, labels=TRUE)
  mtext(side=2, at=65, line=3,text=denslab, xpd=TRUE, las=3, cex=1)
- text(x=.7, y=128, "A", cex=1.5)
+ text(x=.7, y=133, "A", cex=1.5)
  
  #sd fern vs sela
  par(mar=c(0,0,0,0))
- boxplot(stomatadensity_mm2 ~ family, data=stom, ylab="", xlab="",yaxt='n',xaxt='n',
-         outline=FALSE, ylim=c(0, 130))
- axis(2, labels=FALSE, tcl=.25)
- text(x=.55, y=128, "B", cex=1.5)
  
+ plot(0:1,0:1,type="n",xlim=c(0.5,2.5), ylim=c(0,135), xaxt='n', yaxt='n', 
+      ylab="", xlab="")
+ vioplot(fern_sd, sela_sd,at=1:2 ,add=TRUE,
+         col="grey98", lwd=2,rectCol="grey60", colMed="black", pchMed=16, wex=.75)
+ axis(2, labels=FALSE, tcl=.25)
+ 
+ # boxplot(stomatadensity_mm2 ~ family, data=stom, ylab="", xlab="",yaxt='n',xaxt='n',
+ #         outline=FALSE, ylim=c(0, 130), 
+ #         whisklwd=2,whisklty=1,staplelty = 0)
+ axis(2, labels=FALSE, tcl=.25)
+ axis(1, labels=FALSE, tcl=.25)
+ text(x=.55, y=133, "B", cex=1.5)
+
  #stomatal length
  par(mar=c(0,0,0,0), xpd=TRUE)
  boxplot(length_um ~ species, data=stomsize2,xaxt='n', 
-         outline=FALSE,at=c(1:7, 9:13), ylim=c(0, 65))
+         outline=FALSE,at=c(1:7, 9:13), ylim=c(0, 65), 
+         whisklwd=2,whisklty=1,staplelty = 0)
  axis(1, at=c(1:7, 9:13), labels=FALSE)
  mtext(side=1, at=1:7, line=1,text=specieslabs2[1:7], xpd=TRUE, las=2, cex=1)
  mtext(side=1, at=9:13, line=1,text=specieslabs2[8:12], xpd=TRUE, las=2, cex=1)
@@ -66,11 +79,17 @@ png(filename = "output/stomata.png", width = 11, height = 8.5, units = "in", res
  
  #sl fern vs sela
  par(mar=c(0,0,0,0), xpd=TRUE)
- boxplot(length_um ~ family, data=stomsize2, ylab="", xlab=stomsize2$family,
-         ylim=c(0,65),yaxt='n',
-         outline=FALSE)
+ 
+ plot(0:1,0:1,type="n",xlim=c(0.5,2.5), ylim=c(0,65), xaxt='n', yaxt='n', ylab="", xlab="")
+ vioplot(fern_sl, sela_sl,at=1:2 ,add=TRUE,
+         col="grey98", lwd=2,rectCol="grey60", colMed="black", pchMed=16, wex=.75)
  axis(2, labels=FALSE, tcl=.25)
+ axis(1, labels = c("Ferns", "Selaginella"), at=1:2)
  text(x=.55, y=62.5, "D", cex=1.5)
+ # boxplot(length_um ~ family, data=stomsize2, ylab="", xlab=stomsize2$family,
+ #         ylim=c(0,65),yaxt='n', outline=FALSE, 
+ #         whisklwd=2,whisklty=1,staplelty = 0)
+
  
 # dev.copy2pdf(file= "output/stomata.pdf")
 dev.off()
