@@ -99,7 +99,10 @@ pnue_mod_sela <- lmer(nue ~ LMA * habitat+ (1|species), data=sela2)
   # 0.4135190 0.8549372 
   # P < 0.023 = habitat only
   
-ppue_mod_sela <- lmer(pue ~ LMA + habitat + (1|species), data=sela2)
+pnue_slopes <- lstrends(pnue_mod_sela, "habitat", var="LMA")
+  pairs(pnue_slopes)
+  
+ppue_mod_sela <- lmer(pue ~ LMA * habitat + (1|species), data=sela2)
   Anova(ppue_mod_sela)
   r.squaredGLMM(ppue_mod_sela)
   
@@ -156,4 +159,18 @@ ppue_mod_fern <- lmer(pue ~ LMA  + (1|species), data=pue_ferns)
   plma_mod_sela2 <- lmer(amass ~ LMA + (1|species), data=ferns)
   Anova(plma_mod_sela2)
   r.squaredGLMM(plma_mod_sela2)
+
+###both groups?  
+  
+#PNUE all
+nue_dat <- alldata[complete.cases(alldata$nue), ]  
+  
+pnue_mod_all <- lmer(nue ~ LMA + (1|species), data=nue_dat)
+  Anova(pnue_mod_all)
+  r.squaredGLMM(pnue_mod_all)
+  
+  
+ppue_mod_all <- lmer(pue ~ LMA + (1|species), data=nue_dat)
+  Anova(ppue_mod_all)
+  r.squaredGLMM(ppue_mod_all)
   

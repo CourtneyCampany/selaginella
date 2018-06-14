@@ -121,7 +121,8 @@ chl_siglets <-cld(tukey_chl)
 chl_siglets2 <- chl_siglets$mcletters$Letters
 
 #habitats
-chl_mod2 <- lm(chlorophyll ~ habitat, data=sela)
+library(lme4)
+chl_mod2 <- lmer(chlorophyll ~ habitat + (1|species), data=sela)
 summary(chl_mod2)
 anova(chl_mod2)
 visreg(chl_mod2)
