@@ -39,12 +39,16 @@ nuecols2 <- c(alpha(nuecols[1], .85), alpha(nuecols[2], .85))
   
 ###plotting ------
 
-png(filename = "output/lma_pnue.png", width = 11, height = 8.5, units = "in", res= 400)
+# png(filename = "output/lma_pnue.png", width = 11, height = 8.5, units = "in", res= 400)
+
+
+jpeg(filename = "output/manuscript_figures/Figure_5.jpeg", 
+     width = 8.4, height =8.4, units = "in", res= 300)
 
 # windows(7,7)
 par(las=1, cex.axis=1, cex.lab=1.25, mgp=c(3,1,0), mar=c(5,5,1,1))
 
-plot(nue~ LMA, data=alldata, ylim=c(0, 36), xlim=c(0, 26),
+plot(nue~ LMA, data=alldata, ylim=c(0, 32), xlim=c(0, 26),
      xlab=lmalab, ylab=nuelab2, type='n')
 legend("topright", legend=c("Ferns", "Selaginella"), pt.bg=nuecols,  pch=21, 
        bty='n', inset=.01, cex=1.25, pt.cex=1.25)
@@ -52,7 +56,7 @@ predline(lma_pnue_mod, col="grey20",lwd=2, lty=2)
 points(nue~ LMA, data= ferns, pch=21,bg=nuecols2[1], cex=1.5)
 points(nue~ LMA, data=sela, pch=21, bg=nuecols2[2], cex=1.5)
 
-text(1, 6, expression(paste(R[cond]^{"2"}," = "," 0.55")))
-text(1, 1.5, expression(paste(R[marg]^{"2"}," = "," 0.81")))
+text(2, 4, expression(paste(R[cond]^{"2"}," = "," 0.55")))
+text(2, 2, expression(paste(R[marg]^{"2"}," = "," 0.81")))
 
 dev.off()

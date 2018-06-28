@@ -42,8 +42,11 @@ ferncol<-
 ##ploting-------
 # windows()
 
-png(filename = "output/bivariate.png", width = 8, height = 9, 
-    units = "in", res= 400)
+# png(filename = "output/bivariate.png", width = 8, height = 9, 
+#     units = "in", res= 400)
+
+jpeg(filename = "output/manuscript_figures/Figure_4.jpeg", 
+     width = 8.4, height = 8.4, units = "in", res= 300)
 
 layout(matrix(c(1:4), nrow=2, ncol=2) )
 par(las=1,  mgp=c(3,1,0), cex.lab=1.25)
@@ -72,8 +75,8 @@ points(amass ~ nmass, data=sela2, col=trtcols2[habitat], pch=16, cex=1.5)
 text("C", x=0, y=1000, cex=1.25)
 mtext(side=1, text=nmasslab, line=3.5,at=55)
 
-text(10, 800, expression(paste(R[cond]^{"2"}," = "," 0.43")))
-text(10, 700, expression(paste(R[marg]^{"2"}," = "," 0.81")))
+text(8, 750, expression(paste(R[cond]^{"2"}," = "," 0.43")))
+text(8, 650, expression(paste(R[marg]^{"2"}," = "," 0.81")))
 
 #fern: a gs
 par(mar=c(5,0,1,5))

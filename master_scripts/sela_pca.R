@@ -47,8 +47,11 @@ sppnames <- c("Sel_eur",  "Sel_anc",  "Sel_ati",  "Sel_umb",
               "Sel_oax",  "Sel_spp", "Sel_art")
 
 # windows()
-png(filename = "output/pca_sela.png", width = 11, height = 8.5,
-    units = "in", res= 400)
+# png(filename = "output/pca_sela.png", width = 11, height = 8.5,
+#     units = "in", res= 400)
+
+jpeg(filename = "output/manuscript_figures/Figure_2.jpeg", 
+     width = 8.4, height =8.4, units = "in", res= 300)
 
 par(mar=c(5,5,2,2), las=1,cex.axis=0.8)
 plot(sites,ylab="PC 2 (22.3 %)", xlab="PC 1 (40.4 %)",type='n',
