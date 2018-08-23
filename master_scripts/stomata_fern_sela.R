@@ -26,7 +26,7 @@ stomsize2$species <- factor(stomsize2$species,
                             "Dip_stri","Lom_jap","Thy_cur"))
 
 
-specieslabs2 <- c("Sel_anc","Sel_art","Sel_ati","Sel_eur","Sel_oax","Sel_spp",
+specieslabs2 <- c("Sel_anc","Sel_art","Sel_ati","Sel_eur","Sel_oax","Sel_sp",
                   "Sel_umb","Bul_port","Cyc_semi","Dip_stri","Lom_jap","Thy_cur")
 
 sela_sl <- stomsize2[stomsize2$family == "Selaginella", "length_um"]
@@ -39,9 +39,9 @@ fern_sd <- stom[stom$family == "Ferns", "stomatadensity_mm2"]
 # png(filename = "output/stomata.png", width = 11, height = 8.5, units = "in", res= 400)
  
 jpeg(filename = "output/manuscript_figures/Figure_3.jpeg", 
-     width = 8.4, height = 8.4, units = "in", res= 300)
+      width = 8.4, height = 8.4, units = "in", res= 300)
 
-# windows(8,8)
+ # windows(8,8)
  par(mfrow=c(2,2), las=1,mgp=c(3,1,0),oma=c(6,5,1,1))
  
  #stomatal density
@@ -59,7 +59,7 @@ jpeg(filename = "output/manuscript_figures/Figure_3.jpeg",
  
  plot(0:1,0:1,type="n",xlim=c(0.5,2.5), ylim=c(0,135), xaxt='n', yaxt='n', 
       ylab="", xlab="")
- vioplot(fern_sd, sela_sd,at=1:2 ,add=TRUE,
+ vioplot(sela_sd, fern_sd,at=1:2 ,add=TRUE,
          col="grey98", lwd=2,rectCol="grey60", colMed="black", pchMed=16, wex=.75)
  axis(2, labels=FALSE, tcl=.25)
  
@@ -85,10 +85,10 @@ jpeg(filename = "output/manuscript_figures/Figure_3.jpeg",
  par(mar=c(0,0,0,0), xpd=TRUE)
  
  plot(0:1,0:1,type="n",xlim=c(0.5,2.5), ylim=c(0,65), xaxt='n', yaxt='n', ylab="", xlab="")
- vioplot(fern_sl, sela_sl,at=1:2 ,add=TRUE,
+ vioplot(sela_sl, fern_sl, at=1:2 ,add=TRUE,
          col="grey98", lwd=2,rectCol="grey60", colMed="black", pchMed=16, wex=.75)
  axis(2, labels=FALSE, tcl=.25)
- axis(1, labels = c("Ferns", "Selaginella"), at=1:2)
+ axis(1, labels = c("Selaginella", "Ferns"), at=1:2)
  text(x=.55, y=62.5, "D", cex=1.5)
  # boxplot(length_um ~ family, data=stomsize2, ylab="", xlab=stomsize2$family,
  #         ylim=c(0,65),yaxt='n', outline=FALSE, 

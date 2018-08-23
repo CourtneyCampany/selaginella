@@ -44,7 +44,7 @@ pchs <- c(rep(21,5), rep(22,5), rep(21,3), rep(24,5), rep(22,3),
 habs <- c("Closed Canopy", "Open Canopy", "Swamp")
 habpch <- c(21, 24, 22)
 sppnames <- c("Sel_eur",  "Sel_anc",  "Sel_ati",  "Sel_umb",  
-              "Sel_oax",  "Sel_spp", "Sel_art")
+              "Sel_oax",  "Sel_sp", "Sel_art")
 
 # windows()
 # png(filename = "output/pca_sela.png", width = 11, height = 8.5,
