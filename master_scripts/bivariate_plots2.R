@@ -37,7 +37,7 @@ namass_mod_fern<- lm(amass ~ nmass ,data=ferns)
 
 ## plot bits------
 library(scales)
-ferncol<- 
+
 
 ##ploting-------
 # windows()
@@ -45,8 +45,11 @@ ferncol<-
 # png(filename = "output/bivariate.png", width = 8, height = 9, 
 #     units = "in", res= 400)
 
-jpeg(filename = "output/manuscript_figures/Figure_4.jpeg", 
-     width = 8.4, height = 8.4, units = "in", res= 300)
+# jpeg(filename = "output/manuscript_figures/Figure_4.jpeg", 
+#      width = 8.4, height = 8.4, units = "in", res= 300)
+
+setEPS()
+postscript("output/manuscript_figures/Figure_4.eps")
 
 layout(matrix(c(1:4), nrow=2, ncol=2) )
 par(las=1,  mgp=c(3,1,0), cex.lab=1.25)
@@ -105,7 +108,6 @@ text("D", x=0, y=1000, cex=1.25)
 
 # dev.copy2pdf(file= "output/traits2.pdf")
 dev.off()
-
 
 
 # windows(10,6)

@@ -81,8 +81,11 @@ xAT_fri <- seq(from=startfri,to=endfri, by="hour", tz="UTC")
 #omit closed canopy-open (messed up humiity values)
 #png(filename = "output/airvars.png", width = 11, height = 8.5, units = "in", res= 400)
 
-jpeg(filename = "output/manuscript_figures/Figure_1.jpeg", 
-     width = 6.8, height = 9, units = "in", res= 300)
+# jpeg(filename = "output/manuscript_figures/Figure_1.jpeg", 
+#      width = 6.8, height = 9, units = "in", res= 300)
+
+setEPS()
+postscript("output/manuscript_figures/Figure_1..eps")
 
 # windows(7,10)
 par(mfrow=c(3,1), las=1, cex.axis=1.21, cex.lab=1.51, mgp=c(2.5,1,0),oma=c(4, 0, 1,0),

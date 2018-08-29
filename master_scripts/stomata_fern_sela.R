@@ -38,8 +38,11 @@ fern_sd <- stom[stom$family == "Ferns", "stomatadensity_mm2"]
 #### 4 panel figure ------
 # png(filename = "output/stomata.png", width = 11, height = 8.5, units = "in", res= 400)
  
-jpeg(filename = "output/manuscript_figures/Figure_3.jpeg", 
-      width = 8.4, height = 8.4, units = "in", res= 300)
+# jpeg(filename = "output/manuscript_figures/Figure_3.jpeg", 
+#       width = 8.4, height = 8.4, units = "in", res= 300)
+
+setEPS()
+postscript("output/manuscript_figures/Figure_3.eps")
 
  # windows(8,8)
  par(mfrow=c(2,2), las=1,mgp=c(3,1,0),oma=c(6,5,1,1))
