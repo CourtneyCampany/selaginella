@@ -221,3 +221,33 @@ ablinepiece <- function(a=NULL,b=NULL,reg=NULL,from,to,...){
            y0=a+from*b,y1=a+to*b,...)
   
 }
+
+
+###redo addpoly and predline for eps with no transparency
+####addpoly
+addpoly2 <- function(x,y1,y2,col="lightgrey",...){
+  ii <- order(x)
+  y1 <- y1[ii]
+  y2 <- y2[ii]
+  x <- x[ii]
+  polygon(c(x,rev(x)), c(y1, rev(y2)), col=col, border=NA,...)
+}
+
+
+####predline
+predline2 <- function(fit, from=NULL, to=NULL, ...){
+  
+  if(is.null(from))from <- min(fit$model[,2], na.rm=TRUE)
+  if(is.null(to))to <- max(fit$model[,2], na.rm=TRUE)
+  
+  newdat <- data.frame(X = seq(from,to, length=101))
+  
+  nm <- names(coef(fit))
+  names(newdat)[1] <- nm[length(nm)]
+  
+  pred <- as.data.frame(predict(fit, newdat, se.fit=TRUE, interval="confidence")$fit)
+  
+  addpoly2(newdat[[1]], pred$lwr, pred$upr)
+  ablinepiece(fit, from=from, to=to, ...)
+}
+

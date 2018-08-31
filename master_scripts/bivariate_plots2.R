@@ -51,6 +51,11 @@ library(scales)
 setEPS()
 postscript("output/manuscript_figures/Figure_4.eps")
 
+# cairo_ps(file = "output/manuscript_figures/Figure_4.eps",
+#          onefile = FALSE, fallback_resolution = 800)
+
+###using predline2 for .eps (no transparency) with trtcols instead of trtcols2
+
 layout(matrix(c(1:4), nrow=2, ncol=2) )
 par(las=1,  mgp=c(3,1,0), cex.lab=1.25)
 
@@ -58,8 +63,8 @@ par(las=1,  mgp=c(3,1,0), cex.lab=1.25)
 par(mar=c(5,5,1,0))
 plot(asat ~ gs, data=sela2, ylab=anetlab, xlab="", ylim=c(0,9),
      xlim=c(0,.27), type='n')
-predline(ags_mod_simp, col="grey20",lwd=2, lty=2)
-points(asat ~ gs, data=sela2, col=trtcols2[habitat], pch=16, cex=1.5)
+predline2(ags_mod_simp, col="grey20",lwd=2, lty=2)
+points(asat ~ gs, data=sela2, col=trtcols[habitat], pch=16, cex=1.5)
 legend("bottomright",col=trtcols,pch=16,legend=trtlab,inset=.01,  bty='n',
        cex=1)
 text("A", x=0, y=9, cex=1.25)
@@ -73,8 +78,8 @@ text(.04, 5.9, expression(paste(R[marg]^{"2"}," = "," 0.91")))
 par(mar=c(5,5,1,0))
 plot(amass ~ nmass, data=sela2, ylim=c(0,1000), ylab=amasslab,
      xlim=c(0,55), xlab="")
-predline(an_mod_simp, col="grey20",lwd=2, lty=2)
-points(amass ~ nmass, data=sela2, col=trtcols2[habitat], pch=16, cex=1.5)
+predline2(an_mod_simp, col="grey20",lwd=2, lty=2)
+points(amass ~ nmass, data=sela2, col=trtcols[habitat], pch=16, cex=1.5)
 text("C", x=0, y=1000, cex=1.25)
 mtext(side=1, text=nmasslab, line=3.5,at=55)
 
@@ -85,9 +90,9 @@ text(8, 650, expression(paste(R[marg]^{"2"}," = "," 0.81")))
 par(mar=c(5,0,1,5))
 plot(asat ~ gs, data=ferns, yaxt="n", xlab="", ylim=c(0, 9),
      xlim=c(0,.27), ylab="")
-predline(asatgs_mod_fern, col="grey20",lwd=2, lty=2)
+predline2(asatgs_mod_fern, col="grey20",lwd=2, lty=2)
 # ablineclip(asatgs_mod_fern, col=fernline, lwd=2, x1=0.02358104, x2=0.23880560)
-points(asat ~ gs, data=ferns, col=trtcols2[3], pch=16, cex=1.5)
+points(asat ~ gs, data=ferns, col=trtcols[3], pch=16, cex=1.5)
 text("B", x=0, y=9, cex=1.25)
 title(expression(underline(Ferns)),cex=1.25, line=-1)
 
@@ -100,13 +105,13 @@ plot(amass ~ nmass, data=ferns,  ylim=c(0,1000), ylab="",
      xlim=c(0,55), xlab="",yaxt='n', type='n')
 # predline(namass_mod_fern, col="grey20",lwd=2, lty=2)
 # ablineclip(namass_mod_fern, col=fernline, x1=24.2, x2=47.5, lwd=2)
-points(amass ~ nmass  ,col=trtcols2[3], pch=16, data=ferns, cex=1.5)
+points(amass ~ nmass  ,col=trtcols[3], pch=16, data=ferns, cex=1.5)
 text("D", x=0, y=1000, cex=1.25)
 
 # text(10, 800, expression(paste(R[cond]^{"2"}," = "," 0.43")))
 # text(10, 700, expression(paste(R[marg]^{"2"}," = "," 0.81")))
 
-# dev.copy2pdf(file= "output/traits2.pdf")
+# dev.copy2pdf(file= "output/manuscript_figures/Figure_4.pdf")
 dev.off()
 
 
