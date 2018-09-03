@@ -53,6 +53,7 @@ sppnames <- c("Sel_eur",  "Sel_anc",  "Sel_ati",  "Sel_umb",
 # jpeg(filename = "output/manuscript_figures/Figure_2.jpeg", 
 #      width = 8.4, height =8.4, units = "in", res= 300)
 
+#cannot use transparency for .eps on points
 setEPS()
 postscript("output/manuscript_figures/Figure_2.eps")
 
@@ -61,7 +62,7 @@ plot(sites,ylab="PC 2 (22.3 %)", xlab="PC 1 (40.4 %)",type='n',
      xlim=c(-2, 2), ylim=c(-2, 2))
 abline(v=0, lty='dashed')
 abline(h=0, lty='dashed')
-points(sites,cex=1.5, bg=alpha(cols2, .8), pch=pchs)
+points(sites,cex=1.5, bg=cols2 , pch=pchs)#bg=alpha(cols2, .8)
   # text(spp,labels=rownames(scores(sela_rda, display='species')),cex=1,col="grey20")
   arrows(0, 0, len * spp[, 1],  len * spp[, 2], length = 0.05)
   text(spp,labels=rownames(spp),cex=1)
