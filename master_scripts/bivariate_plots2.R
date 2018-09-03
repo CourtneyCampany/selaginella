@@ -45,11 +45,11 @@ library(scales)
 # png(filename = "output/bivariate.png", width = 8, height = 9, 
 #     units = "in", res= 400)
 
-# jpeg(filename = "output/manuscript_figures/Figure_4.jpeg", 
-#      width = 8.4, height = 8.4, units = "in", res= 300)
+jpeg(filename = "output/manuscript_figures/Figure_4.jpeg",
+     width = 8.4, height = 8.4, units = "in", res= 300)
 
-setEPS()
-postscript("output/manuscript_figures/Figure_4.eps")
+# setEPS()
+# postscript("output/manuscript_figures/Figure_4.eps")
 
 # cairo_ps(file = "output/manuscript_figures/Figure_4.eps",
 #          onefile = FALSE, fallback_resolution = 800)
@@ -63,9 +63,9 @@ par(las=1,  mgp=c(3,1,0), cex.lab=1.25)
 par(mar=c(5,5,1,0))
 plot(asat ~ gs, data=sela2, ylab=anetlab, xlab="", ylim=c(0,9),
      xlim=c(0,.27), type='n')
-predline2(ags_mod_simp, col="grey20",lwd=2, lty=2)
+predline(ags_mod_simp, col="grey20",lwd=2, lty=2)
 # points(asat ~ gs, data=sela2, col=trtcols[habitat], pch=16, cex=1.5)
-points(asat ~ gs, data=sela2, bg=trtcols[habitat], pch=21, cex=1.5)
+points(asat ~ gs, data=sela2, bg=trtcols2[habitat], pch=21, cex=1.5)
 legend("bottomright",pt.bg=trtcols,pch=21,legend=trtlab,inset=.01,  bty='n',
        cex=1)
 text("A", x=0, y=9, cex=1.25)
@@ -79,9 +79,9 @@ text(.04, 5.9, expression(paste(R[marg]^{"2"}," = "," 0.91")))
 par(mar=c(5,5,1,0))
 plot(amass ~ nmass, data=sela2, ylim=c(0,1000), ylab=amasslab,
      xlim=c(0,55), xlab="")
-predline2(an_mod_simp, col="grey20",lwd=2, lty=2)
+predline(an_mod_simp, col="grey20",lwd=2, lty=2)
 # points(amass ~ nmass, data=sela2, col=trtcols[habitat], pch=16, cex=1.5)
-points(amass ~ nmass, data=sela2, bg=trtcols[habitat], pch=21, cex=1.5)
+points(amass ~ nmass, data=sela2, bg=trtcols2[habitat], pch=21, cex=1.5)
 text("C", x=0, y=1000, cex=1.25)
 mtext(side=1, text=nmasslab, line=3.5,at=55)
 
@@ -92,11 +92,11 @@ text(8, 650, expression(paste(R[marg]^{"2"}," = "," 0.81")))
 par(mar=c(5,0,1,5))
 plot(asat ~ gs, data=ferns, yaxt="n", xlab="", ylim=c(0, 9),
      xlim=c(0,.27), ylab="")
-predline2(asatgs_mod_fern, col="grey20",lwd=2, lty=2)
+predline(asatgs_mod_fern, col="grey20",lwd=2, lty=2)
 # ablineclip(asatgs_mod_fern, col=fernline, lwd=2, x1=0.02358104, x2=0.23880560)
 # points(asat ~ gs, data=ferns, col=trtcols[3], pch=16, cex=1.5)
 #try this with .eps
-points(asat ~ gs, data=ferns, pch=21, bg=trtcols[3],  cex=1.5)
+points(asat ~ gs, data=ferns, pch=21, bg=trtcols2[3],  cex=1.5)
 text("B", x=0, y=9, cex=1.25)
 title(expression(underline(Ferns)),cex=1.25, line=-1)
 
@@ -110,7 +110,7 @@ plot(amass ~ nmass, data=ferns,  ylim=c(0,1000), ylab="",
 # predline(namass_mod_fern, col="grey20",lwd=2, lty=2)
 # ablineclip(namass_mod_fern, col=fernline, x1=24.2, x2=47.5, lwd=2)
 # points(amass ~ nmass  ,col=trtcols[3], pch=16, data=ferns, cex=1.5)
-points(amass ~ nmass  ,bg=trtcols[3], pch=21, data=ferns, cex=1.5)
+points(amass ~ nmass  ,bg=trtcols2[3], pch=21, data=ferns, cex=1.5)
 text("D", x=0, y=1000, cex=1.25)
 
 # text(10, 800, expression(paste(R[cond]^{"2"}," = "," 0.43")))
