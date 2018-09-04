@@ -4,3 +4,6 @@
 .Ruserdata
 
 *.pdf
+*.eps
+*.png
+*.jpeg
