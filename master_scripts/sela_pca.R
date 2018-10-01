@@ -32,7 +32,7 @@ sites <- scores(sela_rda, display='sites')
 spp <- scores(sela_rda, display='species')
 #need to rename row names for pretty plotting
 
-row.names(spp) <- c("An", "Gs","Chl", "N", "C:N", "P", "LMA", "SD", "SL", "LCP", "ITE")
+row.names(spp) <- c("An", "Gs","Chl", "N", "C:N", "P", "LMA", "SD", "SL", "LCP", "WUE")
 len <- .8
 
 library(RColorBrewer)
@@ -50,12 +50,12 @@ sppnames <- c("Sel_eur",  "Sel_anc",  "Sel_ati",  "Sel_umb",
 # png(filename = "output/pca_sela.png", width = 11, height = 8.5,
 #     units = "in", res= 400)
 
-# jpeg(filename = "output/manuscript_figures/Figure_2.jpeg", 
-#      width = 8.4, height =8.4, units = "in", res= 300)
+jpeg(filename = "output/manuscript_figures/Figure_2.jpeg",
+     width = 8.4, height =8.4, units = "in", res= 300)
 
 #cannot use transparency for .eps on points
-setEPS()
-postscript("output/manuscript_figures/Figure_2.eps")
+# setEPS()
+# postscript("output/manuscript_figures/Figure_2.eps")
 
 par(mar=c(5,5,2,2), las=1,cex.axis=0.8)
 plot(sites,ylab="PC 2 (22.3 %)", xlab="PC 1 (40.4 %)",type='n',

@@ -35,6 +35,9 @@ an_mod_simp <- lm(amass ~ nmass, data=sela2)
 asatgs_mod_fern <- lm(asat ~ gs, data=ferns)
 namass_mod_fern<- lm(amass ~ nmass ,data=ferns)
 
+asatgs_mod_fern2 <- lmer(asat ~ gs+ (1|species), data=ferns)
+namass_mod_fern2<- lmer(amass ~ nmass+ (1|species) ,data=ferns)
+
 ## plot bits------
 library(scales)
 

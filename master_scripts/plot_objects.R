@@ -22,12 +22,12 @@ stomlengthlab <- expression(Stomatal~Length~~(mu*m^2))
 
 lmalab <- expression(LMA~~(g~m^-2))
 nuelab <- expression(atop(PNUE,
-                          (mu*mols~CO[2]~g~N^-1~s^-1)))
+                          (mu*mol~CO[2]~g~N^-1~s^-1)))
 
-nuelab2 <- expression(PNUE~~(mu*mols~CO[2]~g~N^-1~s^-1))
+nuelab2 <- expression(PNUE~~(mu*mol~CO[2]~g~N^-1~s^-1))
 
 puelab <- expression(atop(PPUE, 
-                          (mu*mols~CO[2]~g~P^-1~s^-1)))
+                          (mu*mol~CO[2]~g~P^-1~s^-1)))
 
 nmasslab<- expression(Leaf~Nitrogen[mass]~~(mg~g^-1))
 narealab <- expression(Leaf~Nitrogen[area]~~(mg~m^-2))

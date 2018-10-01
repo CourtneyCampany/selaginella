@@ -4,15 +4,19 @@ library(doBy)
 library(vioplot)
 
 #stomatal figures between ferns and selaginella
+habitat <- read.csv("raw_data/treatments.csv")
 
 # read and format stomatal data' ------------------------------------------
 
 stom <- read.csv("raw_data/leaf_anatomy.csv")
-stom_family <-doBy::summaryBy(. ~ species, data=stom, FUN=mean)
-stom$species <- factor(stom$species, levels=c("Sel_anc","Sel_art","Sel_ate",
-                                              "Sel_eur","Sel_oax","Sel_swim",
-                                              "Sel_umb","Bul_port","Cyc_semi",
-                                              "Dip_stri","Lom_jap","Thy_cur"))
+  stom_family <-doBy::summaryBy(. ~ species, data=stom, FUN=mean)
+  stom$species <- factor(stom$species, levels=c("Sel_art","Sel_ate","Sel_eur",
+                                                "Sel_swim","Sel_umb","Sel_anc",
+                                                "Sel_oax","Bul_port","Cyc_semi",
+                                                "Dip_stri","Lom_jap","Thy_cur"))
+  # stom <- merge(stom, habitat, all=TRUE)
+  # stom$habitat <- as.character(stom$habitat)
+  # stom$habitat <- ifelse(stom$family == "Ferns", "understory_midlight", stom$habitat)
 
 stomsize <- read.csv("raw_data/stomatal_size.csv")
 stomsize$stomarea_mm2 <- with(stomsize, (length_um *width_um )/1000)
@@ -20,14 +24,15 @@ stomsize2 <- doBy::summaryBy(length_um + width_um + stomarea_mm2~
                                family+species+ind,FUN=mean, data=stomsize, 
                              keep.names = TRUE)
 stomsize2$species <- factor(stomsize2$species, 
-                            levels=c("Sel_anc","Sel_art","Sel_ate",
-                            "Sel_eur","Sel_oax","Sel_swim",
-                            "Sel_umb","Bul_port","Cyc_semi",
-                            "Dip_stri","Lom_jap","Thy_cur"))
-
-
-specieslabs2 <- c("Sel_anc","Sel_art","Sel_ati","Sel_eur","Sel_oax","Sel_sp",
-                  "Sel_umb","Bul_port","Cyc_semi","Dip_stri","Lom_jap","Thy_cur")
+                            levels=c("Sel_art","Sel_ate","Sel_eur",
+                                     "Sel_swim","Sel_umb","Sel_anc",
+                                     "Sel_oax","Bul_port","Cyc_semi",
+                                     "Dip_stri","Lom_jap","Thy_cur"))
+  # stomsize2 <- merge(stomsize2, habitat, all=TRUE)
+  # stomsize2$habitat <- as.character(stomsize2$habitat)
+  # stomsize2$habitat <- ifelse(stomsize2$family == "Ferns", "understory_midlight", 
+  #                             stomsize2$habitat)
+  # stomsize2$habitat <- as.factor(stomsize2$habitat)
 
 sela_sl <- stomsize2[stomsize2$family == "Selaginella", "length_um"]
 fern_sl <- stomsize2[stomsize2$family == "Ferns", "length_um"]
@@ -35,21 +40,27 @@ fern_sl <- stomsize2[stomsize2$family == "Ferns", "length_um"]
 sela_sd <- stom[stom$family == "Selaginella", "stomatadensity_mm2"]
 fern_sd <- stom[stom$family == "Ferns", "stomatadensity_mm2"]
 
+##order of species from plotting from editor comments (by habitats)
+specieslabs2 <- c("Sel_art", "Sel_ate", "Sel_eur", "Sel_swim", "Sel_umb", "Sel_anc", 
+             "Sel_oax", "Bul_port", "Cyc_semi" ,"Dip_stri" ,"Lom_jap" , "Thy_cur")
+
+
 #### 4 panel figure ------
 # png(filename = "output/stomata.png", width = 11, height = 8.5, units = "in", res= 400)
  
-# jpeg(filename = "output/manuscript_figures/Figure_3.jpeg", 
-#       width = 8.4, height = 8.4, units = "in", res= 300)
+jpeg(filename = "output/manuscript_figures/Figure_3test.jpeg",
+      width = 8.4, height = 8.4, units = "in", res= 300)
 
-setEPS()
-postscript("output/manuscript_figures/Figure_3.eps")
+# setEPS()
+# postscript("output/manuscript_figures/Figure_3.eps")
 
  # windows(8,8)
  par(mfrow=c(2,2), las=1,mgp=c(3,1,0),oma=c(6,5,1,1))
  
  #stomatal density
  par(mar=c(0,0,0,0))
- boxplot(stomatadensity_mm2 ~ species, data=stom, ylab="", xlab="",yaxt='n',xaxt='n',
+ boxplot(stomatadensity_mm2 ~ species, data=stom, ylab="", xlab="",yaxt='n',
+         xaxt='n',
          outline=FALSE, at=c(1:7, 9:13), ylim=c(0, 135), 
          whisklwd=2,whisklty=1,staplelty = 0)
  axis(1, at=c(1:7, 9:13), labels=FALSE, tcl=.5)
@@ -65,17 +76,13 @@ postscript("output/manuscript_figures/Figure_3.eps")
  vioplot(sela_sd, fern_sd,at=1:2 ,add=TRUE,
          col="grey98", lwd=2,rectCol="grey60", colMed="black", pchMed=16, wex=.75)
  axis(2, labels=FALSE, tcl=.25)
- 
- # boxplot(stomatadensity_mm2 ~ family, data=stom, ylab="", xlab="",yaxt='n',xaxt='n',
- #         outline=FALSE, ylim=c(0, 130), 
- #         whisklwd=2,whisklty=1,staplelty = 0)
- axis(2, labels=FALSE, tcl=.25)
  axis(1, labels=FALSE, tcl=.25)
  text(x=.55, y=133, "B", cex=1.5)
 
  #stomatal length
  par(mar=c(0,0,0,0), xpd=TRUE)
- boxplot(length_um ~ species, data=stomsize2,xaxt='n', 
+ boxplot(length_um ~ species, data=stomsize2,
+         xaxt='n', 
          outline=FALSE,at=c(1:7, 9:13), ylim=c(0, 65), 
          whisklwd=2,whisklty=1,staplelty = 0)
  axis(1, at=c(1:7, 9:13), labels=FALSE)
@@ -83,7 +90,7 @@ postscript("output/manuscript_figures/Figure_3.eps")
  mtext(side=1, at=9:13, line=1,text=specieslabs2[8:12], xpd=TRUE, las=2, cex=1)
  mtext(side=2, at=32.5, line=3,text="Stomatal Length  (um)", xpd=TRUE, las=3, cex=1)
  text(x=.7, y=62.5, "C", cex=1.5)
- 
+
  #sl fern vs sela
  par(mar=c(0,0,0,0), xpd=TRUE)
  
@@ -93,10 +100,6 @@ postscript("output/manuscript_figures/Figure_3.eps")
  axis(2, labels=FALSE, tcl=.25)
  axis(1, labels = c("Selaginella", "Ferns"), at=1:2)
  text(x=.55, y=62.5, "D", cex=1.5)
- # boxplot(length_um ~ family, data=stomsize2, ylab="", xlab=stomsize2$family,
- #         ylim=c(0,65),yaxt='n', outline=FALSE, 
- #         whisklwd=2,whisklty=1,staplelty = 0)
-
  
 # dev.copy2pdf(file= "output/stomata.pdf")
 dev.off()
