@@ -327,5 +327,9 @@ summary(lcp_mod2)
 anova(lcp_mod2)
 visreg(lcp_mod2)
 
+tukey_lcp2<- glht(lcp_mod2, linfct = mcp(habitat = "Tukey"))
+lcp2_siglets <-cld(tukey_lcp2)
+lcp2_siglets2 <- lcp2_siglets$mcletters$Letters
+
 min(sela_agg$lcp)
 max(sela_agg$lcp)
