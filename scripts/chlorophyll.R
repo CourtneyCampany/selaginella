@@ -31,6 +31,8 @@ chl_sela_means <- summaryBy(chlA + chlB + chl_tot + chlA_mass + chlB_mass +
                           species + individual + habitat, FUN=mean, data=chl_clean,
                           keep.names = TRUE)
 
+# write.csv(chl_sela_means, "calculated_data/chl_species.csv", row.names=FALSE)
+
 # #relationship with N and use SLA if needed
 # alldata <- read.csv("raw_data/master_data.csv")
 # sela_sla <- alldata[alldata$family == "Selaginella", c(2:3,7,10)]

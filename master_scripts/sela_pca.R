@@ -1,7 +1,16 @@
 #pca with selaginella
 sela <- read.csv("calculated_data/sela_pca.csv")
 
-sela2 <- sela[complete.cases(sela),]
+##need to replace total chlorophyll that is in wrong units
+new_chl <- read.csv("calculated_data/chl_species.csv")
+new_chl2 <- new_chl[, c("species", "individual", "chl_tot_mass")]
+
+sela_nochl <- sela[, -5]
+
+sela_newchl <- merge(sela_nochl, new_chl2)
+names(sela_newchl)[13] <- "chlorophyll"
+
+sela2 <- sela_newchl[complete.cases(sela_newchl),]
 sela3 <- sela2[,-c(1:2)]
 
 # sela_noeuro <- droplevels(sela[sela$species != "Sel_eur",])
@@ -32,7 +41,7 @@ sites <- scores(sela_rda, display='sites')
 spp <- scores(sela_rda, display='species')
 #need to rename row names for pretty plotting
 
-row.names(spp) <- c("An", "Gs","Chl", "N", "C:N", "P", "LMA", "SD", "SL", "LCP", "WUE")
+row.names(spp) <- c("An", "Gs","N", "C:N", "P", "LMA", "SD", "SL", "LCP", "WUE","Chl")
 len <- .8
 
 library(RColorBrewer)
@@ -50,7 +59,7 @@ sppnames <- c("Sel_eur",  "Sel_anc",  "Sel_ati",  "Sel_umb",
 # png(filename = "output/pca_sela.png", width = 11, height = 8.5,
 #     units = "in", res= 400)
 
-jpeg(filename = "output/manuscript_figures/Figure_2.jpeg",
+jpeg(filename = "output/manuscript_figures/Figure_2_newchl.jpeg",
      width = 8.4, height =8.4, units = "in", res= 300)
 
 #cannot use transparency for .eps on points
