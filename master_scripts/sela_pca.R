@@ -1,16 +1,7 @@
 #pca with selaginella
-sela <- read.csv("calculated_data/sela_pca.csv")
+sela <- read.csv("calculated_data/sela_pca_newchl.csv")
 
-##need to replace total chlorophyll that is in wrong units
-new_chl <- read.csv("calculated_data/chl_species.csv")
-new_chl2 <- new_chl[, c("species", "individual", "chl_tot_mass")]
-
-sela_nochl <- sela[, -5]
-
-sela_newchl <- merge(sela_nochl, new_chl2)
-names(sela_newchl)[13] <- "chlorophyll"
-
-sela2 <- sela_newchl[complete.cases(sela_newchl),]
+sela2 <- sela[complete.cases(sela),]
 sela3 <- sela2[,-c(1:2)]
 
 # sela_noeuro <- droplevels(sela[sela$species != "Sel_eur",])
@@ -32,7 +23,7 @@ library(vegan)
 #principle compoent analysis with scales variances
 sela_rda<- rda(sela3,scale=T)
 # plot(sela_rda)
-# summary(sela_rda)
+summary(sela_rda)
 
 #nicer plot
 
@@ -41,7 +32,7 @@ sites <- scores(sela_rda, display='sites')
 spp <- scores(sela_rda, display='species')
 #need to rename row names for pretty plotting
 
-row.names(spp) <- c("An", "Gs","N", "C:N", "P", "LMA", "SD", "SL", "LCP", "WUE","Chl")
+row.names(spp) <- c("An", "Gs","Chl", "N", "C:N", "P", "LMA", "SD", "SL", "LCP", "WUE")
 len <- .8
 
 library(RColorBrewer)
@@ -67,7 +58,7 @@ jpeg(filename = "output/manuscript_figures/Figure_2_newchl.jpeg",
 # postscript("output/manuscript_figures/Figure_2.eps")
 
 par(mar=c(5,5,2,2), las=1,cex.axis=0.8)
-plot(sites,ylab="PC 2 (22.3 %)", xlab="PC 1 (40.4 %)",type='n',
+plot(sites,ylab="PC 2 (18.3 %)", xlab="PC 1 (41.8 %)",type='n',
      xlim=c(-2, 2), ylim=c(-2, 2))
 abline(v=0, lty='dashed')
 abline(h=0, lty='dashed')

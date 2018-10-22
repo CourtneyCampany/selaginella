@@ -158,7 +158,7 @@ visreg(lma_mod2)
 
 tukey_lma2 <- glht(lma_mod2, linfct = mcp(habitat = "Tukey"))
 lma2_siglets <-cld(tukey_lma2)
-lma2_siglets2 <- lma2_siglets$mcletters$Letters
+C <- lma2_siglets$mcletters$Letters
 
 min(sela_agg$LMA)
 max(sela_agg$LMA)

@@ -77,6 +77,7 @@ mtext(side=1, text=condlab, line=3.5,at=.25)
 
 text(.04, 6.75, expression(paste(R[cond]^{"2"}," = "," 0.51")))
 text(.04, 5.9, expression(paste(R[marg]^{"2"}," = "," 0.91")))
+text(.04, 5.1, expression(paste(italic(P)," < "," 0.001")))
 
 #amass v nmass
 par(mar=c(5,5,1,0))
@@ -90,6 +91,7 @@ mtext(side=1, text=nmasslab, line=3.5,at=55)
 
 text(8, 750, expression(paste(R[cond]^{"2"}," = "," 0.43")))
 text(8, 650, expression(paste(R[marg]^{"2"}," = "," 0.81")))
+text(8, 550, expression(paste(italic(P)," = "," 0.009")))
 
 #fern: a gs
 par(mar=c(5,0,1,5))
@@ -105,6 +107,7 @@ title(expression(underline(Ferns)),cex=1.25, line=-1)
 
 text(.04, 6.75, expression(paste(R[cond]^{"2"}," = "," 0.30")))
 text(.04, 5.9, expression(paste(R[marg]^{"2"}," = "," 0.71")))
+text(.04, 5.1, expression(paste(italic(P)," = "," 0.021")))
 
 #fern - amass nmass
 par(mar=c(5,0,1,5))

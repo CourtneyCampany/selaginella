@@ -60,7 +60,8 @@ predline2(lma_pnue_mod, col="grey20",lwd=2, lty=2)
 points(nue~ LMA, data= ferns, pch=21,bg=nuecols[1], cex=1.5)
 points(nue~ LMA, data=sela, pch=21, bg=nuecols[2], cex=1.5)
 
-text(2, 4, expression(paste(R[cond]^{"2"}," = "," 0.55")))
-text(2, 2, expression(paste(R[marg]^{"2"}," = "," 0.81")))
+text(2, 5, expression(paste(R[cond]^{"2"}," = "," 0.55")))
+text(2, 3, expression(paste(R[marg]^{"2"}," = "," 0.81")))
+text(2, 1, expression(paste(italic(P)," < "," 0.001")))
 
 dev.off()
