@@ -65,3 +65,23 @@ text(2, 3, expression(paste(R[marg]^{"2"}," = "," 0.81")))
 text(2, 1, expression(paste(italic(P)," < "," 0.001")))
 
 dev.off()
+
+
+##redo for job talk with no p values------
+# 
+# jpeg(filename = "jobtalk/Figure_5.jpeg",
+#      width = 7, height =7, units = "in", res= 400)
+# 
+# par(las=1, cex.axis=1, cex.lab=1.25, mgp=c(3,1,0), mar=c(5,5,1,1))
+# 
+# plot(nue~ LMA, data=alldata, ylim=c(0, 32), xlim=c(0, 26),
+#      xlab=lmalab, ylab=nuelab2, type='n')
+# legend("topright", legend=c("Ferns", "Selaginella"), pt.bg=nuecols,  pch=21, 
+#        bty='n', inset=.01, cex=1.25, pt.cex=1.25)
+# predline2(lma_pnue_mod, col="grey20",lwd=2, lty=2)
+# #dont use transparnecy for .eps (nuecols2)
+# points(nue~ LMA, data= ferns, pch=21,bg=nuecols[1], cex=1.5)
+# points(nue~ LMA, data=sela, pch=21, bg=nuecols[2], cex=1.5)
+# 
+# dev.off()
+

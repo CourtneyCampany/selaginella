@@ -52,15 +52,35 @@ max(chl_means$chl_tot_mass.mean)
 min(chl_means$chl_tot_mass.mean)
 
 ##basic plotting
-boxplot(chlA ~ habitat, data=chl_sela_agg)
-boxplot(chlB ~ habitat, data=chl_sela_agg)
+boxplot(chlA ~ habitat, data=chl_sela_means)
+boxplot(chlB ~ habitat, data=chl_sela_means)
 boxplot(chlA/chlB ~ habitat, data=chl_sela_agg)
 
 boxplot(chlA_mass ~ habitat, data=chl_sela_agg)
 boxplot(chlB_mass ~ habitat, data=chl_sela_agg)
 boxplot(chl_AB ~ habitat, data=chl_sela_agg)
 
-boxplot(chl_tot_mass ~ habitat, data=chl_sela_agg)
+###figure for job talk
+
+gradient <- colorRampPalette(c("orange","darkgreen"))
+palette(gradient(3))
+trtcols <- palette(gradient(3))
+
+chl_sela_means$habitat<-factor(chl_sela_means$habitat, 
+                       levels=c("full_sun", "understory_midlight", "swamp_lowlight"))
+
+boxlabs <- c("Open canopy","Closed canopy", "Swamp")
+
+# windows()
+# jpeg(filename = "jobtalk/chlorophyll.jpeg",
+#      width = 7, height = 7, units = "in", res= 400)
+# par(las=1, cex.axis=1, cex.lab=1.25, mgp=c(3,1,0), mar=c(4,5,1,1))
+# boxplot(chl_tot_mass ~ habitat, data=chl_sela_means, ylim=c(0,16),col=trtcols,
+#        ylab= "Chlorophyll content (mg g-1)", xaxt='n')
+# axis(1, at=1:3, labels = boxlabs, cex.axis=1.25)
+# 
+# dev.off()
+
 #stats : is chl differemt by habitat?
 
 source("functions.R")
