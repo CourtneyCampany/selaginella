@@ -18,7 +18,7 @@ sela2 <- merge(sela, habitat)
 
 
 ###figure for job talk--------
-
+photolab <- expression(italic(A[n])~~(mu*mol~m^-2~s^-1))
 gradient <- colorRampPalette(c("orange","darkgreen"))
 palette(gradient(3))
 trtcols <- palette(gradient(3))
@@ -33,7 +33,20 @@ jpeg(filename = "jobtalk/nitro.jpeg",
      width = 7, height = 7, units = "in", res= 400)
 par(las=1, cex.axis=1, cex.lab=1.25, mgp=c(3,1,0), mar=c(4,5,1,1))
 boxplot(N ~ habitat, data=sela2, ylim=c(0,4.5),col=trtcols,outline=FALSE,
+        boxlwd=2,whisklwd=2, staplelwd=2,
         ylab= "Foliar N content (%)", xaxt='n')
 axis(1, at=1:3, labels = boxlabs, cex.axis=1.25)
 
 dev.off()
+
+
+jpeg(filename = "jobtalk/photo.jpeg",
+     width = 7, height = 7, units = "in", res= 400)
+par(las=1, cex.axis=1, cex.lab=1.25, mgp=c(3,1,0), mar=c(4,5,1,1))
+boxplot(asat ~ habitat, data=sela2, ylim=c(0,9),col=trtcols,outline=FALSE,
+        boxlwd=2,whisklwd=2, staplelwd=2,
+        ylab= photolab, xaxt='n')
+axis(1, at=1:3, labels = boxlabs, cex.axis=1.25)
+
+dev.off()
+

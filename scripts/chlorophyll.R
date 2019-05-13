@@ -76,6 +76,7 @@ boxlabs <- c("Open canopy","Closed canopy", "Swamp")
 #      width = 7, height = 7, units = "in", res= 400)
 # par(las=1, cex.axis=1, cex.lab=1.25, mgp=c(3,1,0), mar=c(4,5,1,1))
 # boxplot(chl_tot_mass ~ habitat, data=chl_sela_means, ylim=c(0,16),col=trtcols,
+#         boxlwd=2,whisklwd=2, staplelwd=2,
 #        ylab= "Chlorophyll content (mg g-1)", xaxt='n')
 # axis(1, at=1:3, labels = boxlabs, cex.axis=1.25)
 # 

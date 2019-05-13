@@ -84,6 +84,7 @@ dev.off()
 gradient <- colorRampPalette(c("orange","darkgreen"))
 palette(gradient(3))
 trtcols <- palette(gradient(3))
+trtcols2 <- alpha(trtcols, .5)
 
 habitat <- read.csv("raw_data/treatments.csv")
 
@@ -98,8 +99,14 @@ boxlabs <- c("Open canopy","Closed canopy", "Swamp")
 jpeg(filename = "jobtalk/stodens.jpeg",
      width = 7, height = 7, units = "in", res= 400)
 par(las=1, cex.axis=1, cex.lab=1.25, mgp=c(3,1,0), mar=c(4,5,1,1))
+
 boxplot(stomatadensity_mm2 ~ habitat, data=stom,col=trtcols,outline=FALSE,
+        boxlwd=2,whisklwd=2, staplelwd=2,
         ylab= denslab, xaxt='n', ylim=c(0, 150))
 axis(1, at=1:3, labels = boxlabs, cex.axis=1.25)
+
+# stripchart(stomatadensity_mm2 ~ habitat, data = stom,cex=1.5,
+#            vertical = TRUE, method = "jitter",
+#            pch = 16,  col= trtcols, xaxt='n', add=TRUE)
 
 dev.off()
